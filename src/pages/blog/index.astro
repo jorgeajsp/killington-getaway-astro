@@ -1,0 +1,85 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Get all blog posts, sorted by date (newest first)
+const allPosts = await getCollection('blog');
+const posts = allPosts
+  .filter(post => !post.data.draft)
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+const categoryColors: Record<string, string> = {
+  'Skiing': '#0077A8',
+  'Food & Drink': '#e74c3c',
+  'Travel': '#16a085',
+  'News': '#3498db',
+  'Gear': '#f39c12',
+  'Culture': '#9b59b6',
+  'Adventure': '#27ae60',
+  'Training': '#e67e22',
+  'Research': '#34495e'
+};
+---
+
+<BaseLayout
+  title="Blog - Killington Adventures & Travel Tips"
+  description="Expert guides, local insights, and insider tips for making the most of your Killington experience - from skiing and snowboarding to year-round Vermont adventures."
+>
+  <main class="min-h-screen bg-white">
+    <!-- Hero Section -->
+    <div class="bg-brand-navy text-white py-16">
+      <div class="max-w-6xl mx-auto px-6">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Killington Blog</h1>
+        <p class="text-xl text-white/80">Expert guides, local insights, and insider tips for your Vermont adventure</p>
+      </div>
+    </div>
+
+    <!-- Blog Grid -->
+    <div class="max-w-6xl mx-auto px-6 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {posts.map((post) => (
+          <a
+            href={`/blog/${post.slug}/`}
+            class="group block bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+          >
+            <div class="aspect-[16/9] overflow-hidden bg-gray-100">
+              <img
+                src={post.data.image}
+                alt={post.data.title}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-3">
+                <span
+                  class="text-xs font-bold px-3 py-1 rounded-full text-white"
+                  style={`background-color: ${categoryColors[post.data.category] || '#3498DB'}`}
+                >
+                  {post.data.category}
+                </span>
+                <span class="text-xs text-gray-500">
+                  {new Date(post.data.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                </span>
+              </div>
+              <h2 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-brand-blue transition-colors">
+                {post.data.title}
+              </h2>
+              <p class="text-gray-600 text-sm line-clamp-3">
+                {post.data.excerpt}
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

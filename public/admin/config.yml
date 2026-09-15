@@ -1,0 +1,46 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images/blog"
+public_folder: "/images/blog"
+
+collections:
+  - name: "blog"
+    label: "Blog Posts"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Category", name: "category", widget: "select", options: ["Skiing", "Food & Drink", "Travel", "News", "Gear", "Culture", "Adventure", "Training", "Research"] }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Author", name: "author", widget: "string", default: "KG Reporter" }
+      - { label: "Featured Image", name: "image", widget: "image" }
+      - { label: "Image Credit", name: "imageCredit", widget: "string", required: false }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "listings"
+    label: "Listings"
+    files:
+      - label: "All Listings"
+        name: "listings"
+        file: "src/data/listings.json"
+        fields:
+          - label: "Listings"
+            name: "listings"
+            widget: "list"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Categories", name: "categories", widget: "list" }
+              - { label: "Address", name: "address", widget: "string" }
+              - { label: "Phone", name: "phone", widget: "string", required: false }
+              - { label: "Website", name: "website", widget: "string", required: false }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Image URL", name: "image", widget: "string", required: false }
+              - { label: "Local Image", name: "localImage", widget: "image", required: false }
+              - { label: "Latitude", name: "lat", widget: "number", value_type: "float" }
+              - { label: "Longitude", name: "lng", widget: "number", value_type: "float" }
+              - { label: "Draft", name: "draft", widget: "boolean", default: false, required: false }

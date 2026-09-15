@@ -1,0 +1,151 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  return blogEntries.map(entry => ({
+    params: { slug: entry.slug }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+const categoryColors: Record<string, string> = {
+  'Skiing': '#0077A8',
+  'Food & Drink': '#e74c3c',
+  'Travel': '#16a085',
+  'News': '#3498db',
+  'Gear': '#f39c12',
+  'Culture': '#9b59b6',
+  'Adventure': '#27ae60',
+  'Training': '#e67e22',
+  'Research': '#34495e'
+};
+
+const formattedDate = new Date(entry.data.date).toLocaleDateString('en-US', {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric'
+});
+---
+
+<BaseLayout
+  title={entry.data.title}
+  description={entry.data.excerpt}
+  image={`https://killingtongetaway.com${entry.data.image}`}
+>
+  <main class="min-h-screen bg-white">
+    <!-- Hero Section -->
+    <div class="relative w-full pt-16 pb-12 overflow-hidden">
+      <!-- Background Image -->
+      <div class="absolute inset-0 z-0">
+        <img
+          src="/beast-of-the-east.png"
+          alt="Killington Mountain"
+          class="w-full h-full object-cover object-center"
+        />
+      </div>
+
+      <!-- Overlays -->
+      <div class="absolute inset-0 bg-gradient-to-br from-brand-navy/60 via-brand-navy/40 to-brand-blue/20 z-0 mix-blend-multiply"></div>
+      <div class="absolute inset-0 bg-brand-navy/20 z-0"></div>
+
+      <!-- Content -->
+      <div class="relative max-w-6xl mx-auto px-6 z-10">
+        <div class="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12">
+          <!-- Text Content -->
+          <div class="w-full md:flex-1 md:pt-2 order-1">
+            <span
+              class="inline-block text-white text-xs font-bold px-3 py-1 rounded-full mb-4 shadow-lg"
+              style={`background-color: ${categoryColors[entry.data.category] || '#3498DB'}`}
+            >
+              {entry.data.category}
+            </span>
+            <h1 class="text-3xl md:text-4xl lg:text-[2.75rem] font-extrabold text-white leading-tight mb-3 drop-shadow-lg">
+              {entry.data.title}
+            </h1>
+            <p class="text-white/70 text-sm">
+              By {entry.data.author} · {formattedDate}
+            </p>
+          </div>
+
+          <!-- Featured Image -->
+          <div class="w-full md:w-[45%] flex-shrink-0 order-2">
+            <div class="bg-white/10 p-2 rounded-[2rem] shadow-2xl backdrop-blur-md border border-white/20">
+              <div class="rounded-[1.5rem] overflow-hidden bg-white aspect-[4/3] flex items-center justify-center shadow-inner">
+                <img
+                  src={entry.data.image}
+                  alt={entry.data.title}
+                  class="w-full h-full object-contain"
+                />
+              </div>
+              {entry.data.imageCredit && (
+                <p class="text-white/60 text-xs mt-2 px-2">{entry.data.imageCredit}</p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Article Content -->
+    <article class="max-w-3xl mx-auto px-6 py-12">
+      <div class="prose prose-lg max-w-none">
+        <Content />
+      </div>
+
+      <!-- Back to Blog -->
+      <a
+        href="/blog"
+        class="inline-flex items-center gap-2 text-sm font-semibold mt-14 hover:opacity-70 transition-opacity"
+        style="color:#00B4D8"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        Back to Blog
+      </a>
+    </article>
+  </main>
+</BaseLayout>
+
+<style>
+  /* Custom prose styling to match existing blog design */
+  .prose :global(p) {
+    @apply text-gray-600 leading-relaxed mb-5 text-base;
+  }
+
+  .prose :global(h2) {
+    @apply text-2xl font-bold text-gray-900 mt-10 mb-4;
+  }
+
+  .prose :global(h3) {
+    @apply text-xs font-bold text-gray-900 uppercase tracking-wider mt-8 mb-3;
+  }
+
+  .prose :global(strong) {
+    @apply text-gray-900;
+  }
+
+  .prose :global(a) {
+    @apply text-brand-blue font-semibold hover:underline;
+  }
+
+  .prose :global(blockquote) {
+    @apply border-l-4 border-brand-blue pl-4 italic text-gray-700;
+  }
+
+  .prose :global(table) {
+    @apply w-full border-collapse my-6;
+  }
+
+  .prose :global(th) {
+    @apply bg-gray-100 border border-gray-300 px-4 py-2 text-left font-bold;
+  }
+
+  .prose :global(td) {
+    @apply border border-gray-300 px-4 py-2;
+  }
+</style>

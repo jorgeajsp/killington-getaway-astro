@@ -1,0 +1,24 @@
+# Listings Redirects
+/listing/:slug/ /listings/:slug 301
+/listing/:slug /listings/:slug 301
+
+# Locations and Category Redirects
+/location/ski-clubs/ /blog/ski-clubs-in-the-us 301
+/location/ski-clubs /blog/ski-clubs-in-the-us 301
+/location/covered-bridges/ /listings 301
+/location/covered-bridges /listings 301
+/location/ski-shops/ /listings 301
+/location/ski-shops /listings 301
+/location/charging-stations/ /listings 301
+/location/charging-stations /listings 301
+/location/maple-sugar-shacks/ /listings 301
+/location/maple-sugar-shacks /listings 301
+/location/tag/food/ /listings 301
+/location/tag/food /listings 301
+/location/rock-climbing/ /listings 301
+/location/rock-climbing /listings 301
+
+# WordPress legacy cleanup redirects
+/wp-json/* / 301
+/wp-content/* / 301
+/author/* / 301
