@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import WeatherWidget from '../components/react/WeatherWidget';
 
 // Get latest 4 blog posts
 const allPosts = await getCollection('blog');
@@ -86,6 +87,39 @@ const categoryColors: Record<string, string> = {
   'Training': '#e67e22',
   'Research': '#34495e'
 };
+
+// Airbnb accommodations
+const AIRBNB_LISTINGS = [
+  { id: "17731360", title: "Killington Retreat | Deck-Fire Pit-Mountain Views!", rating: "4.94", guests: "4 guests", details: "2 bedrooms · 2 beds · 1 bath", location: "Clarendon, VT", img: "/images/accommodations/listing-1.webp", params: "guests=1&adults=1&s=66&source=embed_widget" },
+  { id: "53130694", title: "Snow Better Place: Perfect for 2. Hot Tub", rating: "4.63", guests: "2 guests", details: "1 bedroom · 1 bed · 1 bath", location: "Killington, VT", img: "/images/accommodations/listing-2.webp", params: "check_in=2024-12-11&check_out=2024-12-16&guests=1&adults=2&s=66&source=embed_widget" },
+  { id: "7452513", title: "Black haus: a hip, cool house hidden in a forest", rating: "4.95", guests: "2 guests", details: "1 bedroom · 1 bed · 1 bath", location: "Rochester, VT", img: "/images/accommodations/listing-3.webp", params: "check_in=2025-01-12&check_out=2025-01-17&guests=1&adults=2&s=66&source=embed_widget" },
+  { id: "44573612", title: "Cozy VT Getaway w/ Hot Tub - 10 min to Killington", rating: "4.96", guests: "10 guests", details: "4 bedrooms · 7 beds · 2.5 baths", location: "Bridgewater, VT", img: "/images/accommodations/listing-4.webp", params: "check_in=2023-09-18&check_out=2023-09-23&guests=1&adults=1&s=66&source=embed_widget" },
+  { id: "803737562629940238", title: "BearQuad- AC, Pool, Tennis, Close to Resort/Biking", rating: "5.0", guests: "10 guests", details: "4 bedrooms · 7 beds · 2 baths", location: "Killington, VT", img: "/images/accommodations/listing-5.webp", params: "guests=1&adults=1&s=66&source=embed_widget" },
+  { id: "53217014", title: "Topridge 3BR w Incredible View & Private Hot Tub!", rating: "4.93", guests: "10 guests", details: "3 bedrooms · 6 beds · 4 baths", location: "Killington, VT", img: "/images/accommodations/listing-6.webp", params: "guests=1&adults=1&s=66&source=embed_widget" },
+  { id: "614306371113185500", title: "CozyCub- Pool, AC, Hiking, Mountain Biking, Tennis", rating: "4.93", guests: "4 guests", details: "1 bedroom · 2 beds · 1 bath", location: "Killington, VT", img: "/images/accommodations/listing-7.webp", params: "guests=1&adults=1&s=66&source=embed_widget" },
+  { id: "907840143992985986", title: "Cozy Condo- Close to Mountain, Ski home trail", rating: "4.83", guests: "4 guests", details: "1 bedroom · 2 beds · 1 bath", location: "Killington, VT", img: "/images/accommodations/listing-8.webp", params: "check_in=2025-03-12&check_out=2025-03-17&guests=1&adults=2&s=66&source=embed_widget" },
+  { id: "19926145", title: "Serene Top Floor Condo (resort style amenities)", rating: "4.78", guests: "2 guests", details: "Studio · 1 bed · 1 bath", location: "Killington, VT", img: "/images/accommodations/listing-9.webp", params: "check_in=2024-12-20&check_out=2024-12-25&guests=1&adults=2&s=66&source=embed_widget" },
+  { id: "13750563", title: "A Sweet Suite! Modern. Pool. 2RM/2BA. Shuttle. 532", rating: "4.89", guests: "6 guests", details: "1 bedroom · 3 beds · 2 baths", location: "Killington, VT", img: "/images/accommodations/listing-10.webp", params: "check_in=2024-12-11&check_out=2024-12-16&guests=1&adults=2&s=66&source=embed_widget" },
+  { id: "50660535", title: "3BR at base of Pico Mountain!", rating: "4.92", guests: "8 guests", details: "3 bedrooms · 7 beds · 2 baths", location: "Killington, VT", img: "/images/accommodations/listing-11.webp", params: "check_in=2024-12-15&check_out=2024-12-20&guests=1&adults=2&s=66&source=embed_widget" },
+  { id: "564541441919260459", title: "Fox Hollow Condo: Close to Killington. 2BR/2BA", rating: "4.76", guests: "6 guests", details: "2 bedrooms · 4 beds · 2 baths", location: "Mendon, VT", img: "/images/accommodations/listing-12.webp", params: "check_in=2024-12-11&check_out=2024-12-16&guests=1&adults=2&s=66&source=embed_widget" },
+  { id: "1034742959619811054", title: "CubsCorner - Pool, Sauna, Gym, Close to Mountain!", rating: "4.87", guests: "3 guests", details: "1 bedroom · 2 beds · 1 bath", location: "Killington, VT", img: "/images/accommodations/listing-13.webp", params: "check_in=2024-12-11&check_out=2024-12-16&guests=1&adults=2&s=66&source=embed_widget" }
+];
+
+// Deals from Backcountry
+const DEALS = [
+  { name: "Osito Jacket - Women's", brand: "The North Face", price: "$55.00", url: "https://www.backcountry.com/the-north-face-osito-jacket-womens", img: "/images/deals/osito-jacket.png", rating: 5 },
+  { name: "Odyssey Multi Short - Men's", brand: "Outdoor Research", price: "$59.00", url: "https://www.backcountry.com/outdoor-research-odyssey-multi-short-mens?skid=ODRZ937-WILATO", img: "/images/deals/odyssey-short.png", rating: 4.5 },
+  { name: "SB120 C2 GX Eagle Mountain Bike", brand: "Yeti Cycles", price: "$3,775.00", url: "https://www.backcountry.com/yeti-cycles-sb120-c2-gx-eagle-mountain-bike", img: "/images/deals/yeti-sb120.png", rating: 5 },
+  { name: "Freerider Pro Cycling Shoe - Men's", brand: "Five Ten", price: "$119.95", url: "https://www.backcountry.com/five-ten-freerider-pro-cycling-shoe-mens?skid=FVTZ145-CAOFWHCOBL", img: "/images/deals/five-ten-freerider.png", rating: 5 },
+  { name: "Shift Split MAG ChromaPop Sunglasses", brand: "Smith", price: "$165.00", url: "https://www.backcountry.com/smith-shift-split-mag-chromapop-sunglasses", img: "/images/deals/smith-sunglasses.png", rating: 4.5 },
+  { name: "Kortal Helmet", brand: "POC", price: "$120.97", url: "https://www.backcountry.com/poc-kortal-helmet", img: "/images/deals/poc-kortal.png", rating: 4.5 },
+  { name: "Compressible Pillow Cinch", brand: "Therm-a-Rest", price: "$32.86 - $49.95", url: "https://www.backcountry.com/therm-a-rest-compressible-pillow-cinch", img: "/images/deals/therm-a-rest-pillow.png", rating: 4.5 },
+  { name: "Wireless 4 Tent: 4-Person 3-Season", brand: "Kelty", price: "$189.95", url: "https://www.backcountry.com/kelty-wireless-4-tent-4-person-3-season", img: "/images/deals/kelty-tent.png", rating: 4.5 },
+  { name: "X Ultra 5 Mid GTX Hiking Boot - Men's", brand: "Salomon", price: "$189.95", url: "https://www.backcountry.com/salomon-x-ultra-5-mid-gtx-hiking-boot-mens", img: "/images/deals/salomon-boots.png", rating: 4.5 },
+  { name: "Mira 22L Hydration Backpack - Women's", brand: "Osprey Packs", price: "$140.00", url: "https://www.backcountry.com/osprey-packs-mira-22l-hydration-backpack-womens", img: "/images/deals/osprey-backpack.png", rating: 5 },
+  { name: "Classic Thermal Base Layer", brand: "Smartwool", price: "$115.00", url: "https://www.backcountry.com/smartwool-classic-thermal-merino-base-layer-crew-mens", img: "/images/deals/smartwool-base.png", rating: 4.5 },
+  { name: "Helium Rain Jacket - Men's", brand: "Outdoor Research", price: "$159.00", url: "https://www.backcountry.com/outdoor-research-helium-rain-jacket-mens", img: "/images/deals/helium-jacket.png", rating: 4.5 },
+];
 ---
 
 <BaseLayout title="Killington Getaway - Your Vermont Adventure Starts Here">
@@ -200,6 +234,97 @@ const categoryColors: Record<string, string> = {
       </div>
     </section>
 
+    <!-- Accommodations Slider -->
+    <section class="bg-gray-50 py-12">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-4xl md:text-5xl font-extrabold text-black mb-3 tracking-tight text-center">
+          Top Picks for Accommodation
+        </h2>
+        <p class="text-center text-gray-400 text-lg mb-8">Handpicked stays near Killington, Vermont</p>
+      </div>
+
+      <div
+        id="accommodations-slider"
+        class="overflow-x-auto pb-8 snap-x snap-mandatory hide-scrollbar flex"
+        style="scrollbar-width: none; -ms-overflow-style: none;"
+      >
+        <div class="flex gap-6 px-6 md:px-[calc((100vw-80rem)/2+1.5rem)]">
+          {AIRBNB_LISTINGS.map(({ id, title, rating, guests, details, location, img, params }) => {
+            const href = `https://www.airbnb.com/rooms/${id}?${params}`;
+            return (
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex-shrink-0 snap-center block bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md hover:border-brand-green/40 transition-all duration-300 group"
+                style="width: min(85vw, 290px); margin: 0;"
+              >
+                <div class="relative aspect-[3/2] overflow-hidden bg-gray-100">
+                  <img
+                    src={img}
+                    alt={title}
+                    loading="lazy"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div class="absolute top-3 left-3 bg-brand-navy/85 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full flex items-center gap-1 shadow-sm">
+                    ⭐ {rating}
+                  </div>
+                  <div class="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm text-gray-800 text-[10px] font-extrabold px-2 py-0.5 rounded shadow-sm">
+                    {guests}
+                  </div>
+                </div>
+
+                <div class="p-4 flex flex-col justify-between h-[115px]">
+                  <div>
+                    <div class="flex justify-between items-start gap-1 mb-1">
+                      <p class="text-[10px] uppercase tracking-wider font-extrabold text-brand-green">
+                        {location}
+                      </p>
+                    </div>
+                    <h3 class="text-sm font-bold text-black leading-snug group-hover:text-brand-green transition-colors line-clamp-2">
+                      {title}
+                    </h3>
+                  </div>
+                  <p class="text-xs font-semibold text-gray-400">
+                    {details}
+                  </p>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+
+      <div class="flex justify-center items-center gap-2 mt-5">
+        {AIRBNB_LISTINGS.map((_, i) => (
+          <button
+            class="accommodation-dot rounded-full transition-all duration-300"
+            data-index={i}
+            aria-label={`Go to listing ${i + 1}`}
+            style={{
+              width: i === 0 ? '24px' : '10px',
+              height: '10px',
+              backgroundColor: i === 0 ? '#2d94e3' : '#D1D5DB',
+              flexShrink: 0,
+            }}
+          />
+        ))}
+      </div>
+    </section>
+
+    <!-- Weather Widget -->
+    <section class="bg-white py-10 px-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-8">
+          <h2 class="text-4xl md:text-5xl font-extrabold text-black mb-3 tracking-tight">
+            Weather Conditions
+          </h2>
+          <p class="text-gray-400 text-lg">Current conditions at Killington, Vermont</p>
+        </div>
+        <WeatherWidget client:load />
+      </div>
+    </section>
+
     <!-- Most Popular Searches -->
     <section class="bg-white py-12 px-6">
       <div class="max-w-7xl mx-auto">
@@ -234,6 +359,72 @@ const categoryColors: Record<string, string> = {
             </a>
           ))}
         </div>
+      </div>
+    </section>
+
+    <!-- Deals of the Day -->
+    <section class="bg-gray-50 py-12 px-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-10">
+          <h2 class="text-4xl md:text-5xl font-extrabold text-black mb-3 tracking-tight">
+            Deals of the Day
+          </h2>
+          <p class="text-gray-400 text-lg">Hand-picked gear from our partner brands — via Backcountry.com</p>
+        </div>
+      </div>
+      <div
+        id="deals-slider"
+        class="flex gap-5 overflow-x-auto pb-10 snap-x snap-mandatory hide-scrollbar"
+        style={{
+          paddingLeft: 'max(1.5rem, calc((100vw - 80rem) / 2 + 1.5rem))',
+          paddingRight: 'max(1.5rem, calc((100vw - 80rem) / 2 + 1.5rem))',
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+        }}
+      >
+        {DEALS.map((deal) => (
+          <a
+            href={deal.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex-shrink-0 w-[min(80vw,18rem)] bg-white rounded-[2.5rem] shadow-sm border border-gray-100 overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 group snap-center"
+          >
+            <div class="w-full h-64 bg-gray-50/50 flex items-center justify-center p-8 overflow-hidden relative">
+              <div class="absolute inset-0 opacity-[0.03] pointer-events-none flex items-center justify-center text-4xl font-black uppercase tracking-tighter">
+                {deal.brand}
+              </div>
+              <img
+                src={deal.img}
+                alt={`${deal.brand} ${deal.name}`}
+                loading="lazy"
+                class="w-full h-full object-contain relative z-10 group-hover:scale-110 transition-transform duration-700"
+              />
+            </div>
+            <div class="p-8 text-center">
+              <p class="text-[10px] font-black uppercase tracking-[0.2em] mb-2 text-brand-green">
+                {deal.brand}
+              </p>
+              <h3 class="text-base font-bold text-gray-900 mb-2 leading-tight h-10 line-clamp-2">{deal.name}</h3>
+
+              <div class="flex justify-center gap-0.5 mb-4 text-amber-400 text-xs">
+                {[...Array(5)].map((_, i) => (
+                  <span key={i}>{i < Math.floor(deal.rating) ? '★' : '☆'}</span>
+                ))}
+              </div>
+
+              <div class="flex items-center justify-center gap-3 mb-6">
+                <span class="text-2xl font-black text-gray-900">{deal.price}</span>
+              </div>
+
+              <div
+                class="inline-flex items-center gap-2 text-[10px] font-black px-8 py-4 rounded-full text-white transition-all shadow-lg group-hover:shadow-brand-green/20 bg-brand-green"
+              >
+                SHOP NOW
+                <span class="group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+            </div>
+          </a>
+        ))}
       </div>
     </section>
 
@@ -304,6 +495,7 @@ const categoryColors: Record<string, string> = {
 
   .hero-image.active {
     opacity: 1;
+    animation: slow-zoom 6s ease-out forwards;
   }
 
   @keyframes slow-zoom {
@@ -315,8 +507,8 @@ const categoryColors: Record<string, string> = {
     }
   }
 
-  .hero-image.active {
-    animation: slow-zoom 6s ease-out forwards;
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 </style>
 
@@ -346,5 +538,67 @@ const categoryColors: Record<string, string> = {
         window.location.href = '/listings';
       }
     });
+  }
+
+  // Accommodations slider auto-scroll
+  const accommodationsSlider = document.getElementById('accommodations-slider');
+  const accommodationDots = document.querySelectorAll('.accommodation-dot');
+  let isPaused = false;
+  let activeDot = 0;
+  const CARD_W = 290;
+  const CARD_GAP = 24;
+  const CARD_STRIDE = CARD_W + CARD_GAP;
+
+  if (accommodationsSlider) {
+    accommodationsSlider.addEventListener('mouseenter', () => { isPaused = true; });
+    accommodationsSlider.addEventListener('mouseleave', () => { isPaused = false; });
+
+    accommodationsSlider.addEventListener('scroll', (e) => {
+      const el = e.currentTarget as HTMLElement;
+      const newDot = Math.round(el.scrollLeft / CARD_STRIDE);
+      if (newDot !== activeDot) {
+        accommodationDots[activeDot]?.setAttribute('style', 'width: 10px; height: 10px; background-color: #D1D5DB;');
+        activeDot = newDot;
+        accommodationDots[activeDot]?.setAttribute('style', 'width: 24px; height: 10px; background-color: #2d94e3;');
+      }
+    });
+
+    setInterval(() => {
+      if (isPaused || !accommodationsSlider) return;
+      const maxScroll = accommodationsSlider.scrollWidth - accommodationsSlider.clientWidth;
+      if (accommodationsSlider.scrollLeft >= maxScroll - 10) {
+        accommodationsSlider.scrollTo({ left: 0, behavior: 'smooth' });
+        activeDot = 0;
+      } else {
+        accommodationsSlider.scrollBy({ left: CARD_STRIDE, behavior: 'smooth' });
+        activeDot = Math.min(activeDot + 1, accommodationDots.length - 1);
+      }
+    }, 5000);
+
+    accommodationDots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        accommodationsSlider.scrollTo({ left: i * CARD_STRIDE, behavior: 'smooth' });
+        accommodationDots[activeDot]?.setAttribute('style', 'width: 10px; height: 10px; background-color: #D1D5DB;');
+        activeDot = i;
+        dot.setAttribute('style', 'width: 24px; height: 10px; background-color: #2d94e3;');
+      });
+    });
+  }
+
+  // Deals slider auto-scroll
+  const dealsSlider = document.getElementById('deals-slider');
+  if (dealsSlider) {
+    dealsSlider.addEventListener('mouseenter', () => { isPaused = true; });
+    dealsSlider.addEventListener('mouseleave', () => { isPaused = false; });
+
+    setInterval(() => {
+      if (isPaused || !dealsSlider) return;
+      const maxScroll = dealsSlider.scrollWidth - dealsSlider.clientWidth;
+      if (dealsSlider.scrollLeft >= maxScroll - 10) {
+        dealsSlider.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        dealsSlider.scrollBy({ left: 228, behavior: 'smooth' });
+      }
+    }, 4000);
   }
 </script>
