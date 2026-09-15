@@ -2,95 +2,290 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// Get latest 3 blog posts
+// Get latest 4 blog posts
 const allPosts = await getCollection('blog');
 const latestPosts = allPosts
   .filter(post => !post.data.draft)
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
-  .slice(0, 3);
+  .slice(0, 4);
+
+// Import listings data
+import listingsData from '../data/listings.json';
+const allListings = listingsData.filter((l: any) => !l.draft);
+
+// Category mapping
+const CAT_MAP: Record<string, string> = {
+  'places to eat': 'places-to-eat',
+  'breweries': 'breweries',
+  'ski shops': 'ski-shops',
+  'hiking': 'hiking',
+  'hiking trails': 'hiking',
+  'golf': 'golf',
+  'golf courses': 'golf',
+  'lodging options': 'lodging-options',
+  'adventure experience': 'adventure',
+  'places to drink': 'places-to-drink',
+  'waterfalls': 'waterfalls',
+  'farm visits': 'farm-visits',
+  'museum experience': 'museums',
+  'nordic ski': 'nordic-ski',
+  'cheese shops': 'cheese',
+  'covered bridges': 'bridges',
+  'bakery & cafes': 'cafe',
+  'rock climbing': 'climbing',
+  'snowmobile tours': 'snowmobile',
+  'spa day': 'spa',
+  'paddle board': 'sup',
+  'maple sugar': 'maple',
+  'grocery markets': 'grocery',
+  'ev charging': 'ev-charging',
+};
+
+function getListingSlugs(listing: any) {
+  return (listing.categories || []).map((c: string) => CAT_MAP[c.toLowerCase().trim()] || null).filter(Boolean);
+}
+
+const CATEGORIES_RAW = [
+  { name: "Places to Eat",     slug: "places-to-eat",   emoji: "🍽️" },
+  { name: "Local Breweries",   slug: "breweries",        emoji: "🍺" },
+  { name: "Ski Shops",         slug: "ski-shops",        emoji: "🎿" },
+  { name: "Hiking Trails",     slug: "hiking",           emoji: "🥾" },
+  { name: "Golf Courses",      slug: "golf",             emoji: "⛳" },
+  { name: "Lodging Options",   slug: "lodging-options",  emoji: "🏠" },
+  { name: "Adventure",         slug: "adventure",        emoji: "🧗" },
+  { name: "Places to Drink",   slug: "places-to-drink",  emoji: "🥂" },
+  { name: "Waterfalls",        slug: "waterfalls",       emoji: "💧" },
+  { name: "Farm Visits",       slug: "farm-visits",      emoji: "🌾" },
+  { name: "Museum Experience", slug: "museums",          emoji: "🏛️" },
+  { name: "Nordic Ski",        slug: "nordic-ski",       emoji: "⛷️" },
+  { name: "Cheese Shops",      slug: "cheese",           emoji: "🧀" },
+  { name: "Covered Bridges",   slug: "bridges",          emoji: "🌉" },
+  { name: "Bakery & Cafes",    slug: "cafe",             emoji: "☕" },
+  { name: "Rock Climbing",     slug: "climbing",         emoji: "🪨" },
+  { name: "Snowmobile Tours",  slug: "snowmobile",       emoji: "🏂" },
+  { name: "Spa Day",           slug: "spa",              emoji: "💆" },
+  { name: "Paddle Board",      slug: "sup",              emoji: "🏄" },
+  { name: "Maple Sugar",       slug: "maple",            emoji: "🍁" },
+  { name: "Grocery Markets",   slug: "grocery",          emoji: "🛒" },
+  { name: "EV Charging",       slug: "ev-charging",      emoji: "⚡" },
+];
+
+const CATEGORIES = CATEGORIES_RAW.map(cat => {
+  const count = allListings.filter((l: any) => getListingSlugs(l).includes(cat.slug)).length;
+  return { ...cat, count };
+});
+
+const categoryColors: Record<string, string> = {
+  'Skiing': '#0077A8',
+  'Food & Drink': '#e74c3c',
+  'Travel': '#16a085',
+  'News': '#3498db',
+  'Gear': '#f39c12',
+  'Culture': '#9b59b6',
+  'Adventure': '#27ae60',
+  'Training': '#e67e22',
+  'Research': '#34495e'
+};
 ---
 
 <BaseLayout title="Killington Getaway - Your Vermont Adventure Starts Here">
-  <main class="min-h-screen bg-white">
-    <!-- Hero Section -->
-    <section class="relative h-[600px] flex items-center justify-center overflow-hidden">
-      <div class="absolute inset-0">
-        <img
-          src="/beast-of-the-east.png"
-          alt="Killington Mountain"
-          class="w-full h-full object-cover"
-        />
-        <div class="absolute inset-0 bg-brand-navy/50"></div>
-      </div>
+  <main class="bg-white font-sans">
 
-      <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        <h1 class="text-5xl md:text-7xl font-bold text-white mb-6">
-          Welcome to Killington
-        </h1>
-        <p class="text-xl md:text-2xl text-white/90 mb-8">
-          Discover the Beast of the East - Vermont's Premier Four-Season Destination
+    <!-- Hero Section with Rotating Images -->
+    <section class="relative flex flex-col items-center justify-center overflow-hidden min-h-[800px] pb-16">
+      <div class="hero-slideshow absolute inset-0">
+        <img src="/images/hero/killington-k1.jpg" alt="Killington K-1" class="hero-image active absolute inset-0 w-full h-full object-cover" />
+        <img src="/images/hero/killington-mountains.png" alt="Killington Green Mountains" class="hero-image absolute inset-0 w-full h-full object-cover" />
+        <img src="/images/hero/killington-aerial.jpg" alt="Killington Aerial View" class="hero-image absolute inset-0 w-full h-full object-cover" />
+        <img src="/images/hero/killington-water.jpg" alt="Killington Paddleboard" class="hero-image absolute inset-0 w-full h-full object-cover" />
+        <img src="/images/hero/killington-bikers.jpg" alt="Killington Bikers" class="hero-image absolute inset-0 w-full h-full object-cover" />
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/70 z-0"></div>
+
+      <div class="relative z-10 text-center text-white px-6 max-w-5xl mx-auto w-full">
+        <p class="uppercase tracking-widest text-sm font-semibold mb-5 text-white/80">
+          Killington, Vermont
         </p>
-        <a
-          href="/blog"
-          class="inline-block bg-brand-blue text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-brand-green transition-colors"
-        >
-          Explore Our Blog
-        </a>
-      </div>
-    </section>
-
-    <!-- Latest Blog Posts -->
-    <section class="max-w-6xl mx-auto px-6 py-16">
-      <h2 class="text-3xl font-bold text-gray-900 mb-8">Latest Stories</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {latestPosts.map((post) => (
-          <a
-            href={`/blog/${post.slug}/`}
-            class="group block bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
-          >
-            <div class="aspect-[16/9] overflow-hidden bg-gray-100">
-              <img
-                src={post.data.image}
-                alt={post.data.title}
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-              />
-            </div>
-            <div class="p-6">
-              <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-brand-blue transition-colors">
-                {post.data.title}
-              </h3>
-              <p class="text-gray-600 text-sm line-clamp-2">
-                {post.data.excerpt}
-              </p>
-            </div>
-          </a>
-        ))}
-      </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="bg-brand-navy text-white py-16">
-      <div class="max-w-4xl mx-auto px-6 text-center">
-        <h2 class="text-3xl font-bold mb-4">Ready to Plan Your Adventure?</h2>
-        <p class="text-xl text-white/80 mb-8">
-          Explore our comprehensive guides, local insights, and insider tips
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-tight tracking-tight drop-shadow-lg">
+          Your Ultimate<br /><span class="text-brand-green">Adventure</span> Getaway
+        </h1>
+        <p class="text-white text-lg md:text-xl mb-10 max-w-3xl mx-auto font-medium leading-relaxed drop-shadow-md">
+          Discover the best restaurants, breweries, ski shops, hiking trails and more in the heart of Vermont. Plan your ultimate adventure getaway with our curated local guide.
         </p>
         <div class="flex gap-4 justify-center flex-wrap">
-          <a
-            href="/blog"
-            class="bg-brand-blue text-white px-6 py-3 rounded-lg font-bold hover:bg-brand-green transition-colors"
-          >
-            Read the Blog
-          </a>
-          <a
-            href="/listings"
-            class="bg-white text-brand-navy px-6 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors"
-          >
-            Browse Listings
+          <a href="/listings" class="text-white font-bold px-10 py-4 rounded-full text-lg hover:opacity-90 transition-opacity shadow-xl uppercase tracking-wider bg-brand-green">
+            Browse All Listings
           </a>
         </div>
       </div>
     </section>
+
+    <!-- Search Bar -->
+    <section class="bg-white py-8 px-6 border-b border-gray-100">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-2xl md:text-3xl font-extrabold text-black mb-4">
+          Search Below to Find Killington's Top Activities
+        </h2>
+        <hr class="border-gray-200 mb-6" />
+        <div class="flex flex-col sm:flex-row gap-3 justify-center items-stretch">
+          <input
+            type="text"
+            id="search-input"
+            placeholder="What are you looking for"
+            class="flex-1 min-w-0 border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-700 bg-white focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 shadow-sm"
+          />
+          <select
+            id="category-select"
+            class="flex-1 min-w-0 border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-700 bg-white focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 cursor-pointer shadow-sm"
+          >
+            <option value="" selected>Category</option>
+            {CATEGORIES.map((cat) => (
+              <option value={cat.slug}>
+                {cat.emoji} {cat.name} ({cat.count})
+              </option>
+            ))}
+          </select>
+          <input
+            type="text"
+            id="location-input"
+            placeholder="Town or ZIP code"
+            class="flex-1 min-w-0 border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-700 bg-white focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 shadow-sm"
+          />
+          <button
+            id="search-button"
+            class="flex-shrink-0 text-white font-bold px-8 py-3 rounded-lg text-sm tracking-widest uppercase hover:opacity-90 transition-opacity shadow-sm bg-brand-green"
+          >
+            SEARCH
+          </button>
+        </div>
+        <p class="text-gray-400 text-sm mt-4">
+          View all ({allListings.length}) listings and activities at Killington
+        </p>
+      </div>
+    </section>
+
+    <!-- Category Grid -->
+    <section class="bg-white py-12 px-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-10">
+          <h2 class="text-4xl md:text-5xl font-extrabold text-black mb-3 tracking-tight">
+            Explore Killington
+          </h2>
+          <p class="text-gray-400 text-lg">Browse {allListings.length} handpicked spots across {CATEGORIES_RAW.length} categories</p>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
+          {CATEGORIES.map((cat) => (
+            <a
+              href={`/listings?category=${cat.slug}`}
+              class="flex flex-col items-center justify-center gap-3 border border-gray-100 rounded-2xl py-7 px-3 text-center group bg-white hover:shadow-md hover:border-brand-green transition-all duration-200"
+            >
+              <span class="text-4xl">{cat.emoji}</span>
+              <span class="text-sm font-semibold text-gray-700 group-hover:text-brand-green leading-tight transition-colors">
+                {cat.name}
+              </span>
+              <span class="text-xs text-gray-400">{cat.count} listings</span>
+            </a>
+          ))}
+        </div>
+
+        <div class="text-center mt-10">
+          <a
+            href="/listings"
+            class="inline-block text-white font-bold px-10 py-4 rounded-full text-base hover:opacity-90 transition-opacity shadow-md bg-brand-green"
+          >
+            Browse All Listings
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Most Popular Searches -->
+    <section class="bg-white py-12 px-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-10">
+          <h2 class="text-4xl md:text-5xl font-extrabold text-black mb-3 tracking-tight">
+            Most Popular Searches
+          </h2>
+          <p class="text-gray-400 text-lg">What visitors are looking for most</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {[
+            { title: "Grocery Markets",     href: "/listings?category=grocery",         img: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&q=80",  alt: "Grocery markets near Killington" },
+            { title: "Ski Shops & Rentals", href: "/listings?category=ski-shops",       img: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&q=80",  alt: "Ski shops near Killington" },
+            { title: "Après-Ski Nightlife", href: "/listings?category=places-to-drink", img: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80", alt: "Apres ski nightlife Killington" },
+          ].map((item) => (
+            <a
+              href={item.href}
+              class="relative rounded-2xl overflow-hidden cursor-pointer group h-[280px]"
+            >
+              <img
+                src={item.img}
+                alt={item.alt}
+                loading="lazy"
+                class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div class="absolute inset-0 bg-black/25 group-hover:bg-black/15 transition-colors"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <h3 class="text-white font-bold text-2xl text-center drop-shadow-lg px-4">
+                  {item.title}
+                </h3>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Blog Posts -->
+    <section class="bg-white py-12 px-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-10">
+          <h2 class="text-4xl md:text-5xl font-extrabold text-black mb-3 tracking-tight">
+            Must Read Stories & Travel Advice
+          </h2>
+          <p class="text-gray-400 text-lg">Inspiration and guides from Killington</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {latestPosts.map((post) => (
+            <a
+              href={`/blog/${post.slug}/`}
+              class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-200 group flex flex-col"
+            >
+              <div class="h-44 overflow-hidden">
+                <img
+                  src={post.data.image}
+                  alt={post.data.title}
+                  loading="lazy"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div class="p-5 flex flex-col flex-1">
+                <div class="flex items-center gap-2 mb-2">
+                  <span
+                    class="text-xs font-bold px-2.5 py-1 rounded-full text-white"
+                    style={`background-color: ${categoryColors[post.data.category] || '#2d94e3'}`}
+                  >
+                    {post.data.category}
+                  </span>
+                  <span class="text-xs text-gray-400">{new Date(post.data.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                </div>
+                <h3 class="text-sm font-bold text-gray-900 mb-2 leading-snug line-clamp-2">
+                  {post.data.title}
+                </h3>
+                <p class="text-xs text-gray-500 mb-4 line-clamp-2 flex-1 leading-relaxed">
+                  {post.data.excerpt}
+                </p>
+                <span class="text-xs font-semibold hover:underline text-brand-green">
+                  Read More →
+                </span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
   </main>
 </BaseLayout>
 
@@ -101,4 +296,55 @@ const latestPosts = allPosts
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+
+  .hero-image {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+
+  .hero-image.active {
+    opacity: 1;
+  }
+
+  @keyframes slow-zoom {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.05);
+    }
+  }
+
+  .hero-image.active {
+    animation: slow-zoom 6s ease-out forwards;
+  }
 </style>
+
+<script>
+  // Hero slideshow
+  const images = document.querySelectorAll('.hero-image');
+  let currentIndex = 0;
+
+  function showNextImage() {
+    images[currentIndex].classList.remove('active');
+    currentIndex = (currentIndex + 1) % images.length;
+    images[currentIndex].classList.add('active');
+  }
+
+  setInterval(showNextImage, 6000);
+
+  // Search functionality
+  const searchButton = document.getElementById('search-button');
+  const categorySelect = document.getElementById('category-select') as HTMLSelectElement;
+
+  if (searchButton && categorySelect) {
+    searchButton.addEventListener('click', () => {
+      const category = categorySelect.value;
+      if (category) {
+        window.location.href = `/listings?category=${category}`;
+      } else {
+        window.location.href = '/listings';
+      }
+    });
+  }
+</script>
