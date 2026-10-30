@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+---
+
+<BaseLayout
+  title="Bus Schedule"
+  description="Daily departure times and seasonal operating hours for Green Mountain Transit buses to Killington."
+>
+  <main class="min-h-screen bg-white font-body">
+    <Hero
+      title='<span class="text-white">Bus</span> <span class="text-brand-green">Schedule</span>'
+      subtitle="Daily departure times and seasonal operating hours."
+      image="/images/hero/the-bus-schedule.webp"
+    />
+
+    <section class="py-24 px-6">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-heading font-black text-brand-navy tracking-tight uppercase mb-6">
+            Official Timetables
+          </h2>
+          <p class="text-gray-500 text-xl leading-relaxed">
+            Buses run daily during the winter season. For the most up-to-date and detailed schedules, please visit the official Green Mountain Transit website.
+          </p>
+        </div>
+
+        <div class="bg-gray-50 rounded-[3rem] p-12 border border-gray-100 mb-16">
+          <h3 class="text-2xl font-black text-brand-navy uppercase mb-8 text-center">Winter Operating Hours</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white p-8 rounded-3xl shadow-sm">
+              <h4 class="font-bold text-brand-green uppercase tracking-widest text-xs mb-4">Weekdays</h4>
+              <p class="text-2xl font-black text-brand-navy">7:00 AM – 6:00 PM</p>
+              <p class="text-gray-400 mt-2">Buses every 60 minutes</p>
+            </div>
+            <div class="bg-white p-8 rounded-3xl shadow-sm">
+              <h4 class="font-bold text-brand-green uppercase tracking-widest text-xs mb-4">Weekends & Holidays</h4>
+              <p class="text-2xl font-black text-brand-navy">7:00 AM – 11:00 PM</p>
+              <p class="text-gray-400 mt-2">Enhanced frequency until late</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <p class="text-gray-400 mb-10 text-lg leading-relaxed">
+            Visit the official Green Mountain Transit site for detailed schedules for each specific route.
+          </p>
+          <a
+            href="https://www.thebus.com/schedules"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block bg-brand-navy text-white font-black px-12 py-5 rounded-full uppercase tracking-widest hover:bg-brand-green transition-all shadow-xl"
+          >
+            The Bus Official Site
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AddListingForm from '../components/react/AddListingForm';
+---
+
+<BaseLayout
+  title="Add Your Listing"
+  description="Get your Vermont business in front of thousands of Killington visitors. Submit your listing for inclusion in our editorially reviewed directory."
+>
+  <main class="min-h-screen bg-white font-body">
+
+    <!-- Header -->
+    <section class="bg-white border-b border-gray-100 py-24 px-6 overflow-hidden">
+      <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-20">
+        <div class="flex-1">
+          <div class="inline-flex items-center gap-3 mb-6">
+            <span class="w-8 h-[2px] bg-brand-green"></span>
+            <p class="uppercase tracking-[0.3em] text-xs font-black text-brand-navy/40">Business Owners</p>
+          </div>
+          <h1 class="text-5xl md:text-7xl font-heading font-black text-brand-navy mb-8 tracking-tight uppercase leading-tight">Add Your <span class="text-brand-green">Listing</span></h1>
+          <p class="text-gray-400 text-xl font-medium leading-relaxed max-w-2xl">
+            Killington Getaway is the most trusted local guide in the region. Get your Vermont business in front of thousands of visitors planning their trip.
+          </p>
+        </div>
+        <div class="bg-gray-50 rounded-[3rem] p-10 flex-shrink-0 w-full lg:w-96 border border-gray-100 shadow-premium relative">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-brand-green/5 rounded-full -mr-16 -mt-16"></div>
+          <h3 class="font-heading font-black text-brand-navy text-xl mb-8 uppercase tracking-tight relative z-10">Why List With Us</h3>
+          <div class="flex flex-col gap-6 relative z-10">
+            <div class="flex items-start gap-4 group">
+              <span class="text-2xl flex-shrink-0 group-hover:scale-125 transition-transform">👁️</span>
+              <span class="text-sm font-medium text-gray-500 leading-tight">Reach Killington visitors before they arrive</span>
+            </div>
+            <div class="flex items-start gap-4 group">
+              <span class="text-2xl flex-shrink-0 group-hover:scale-125 transition-transform">✅</span>
+              <span class="text-sm font-medium text-gray-500 leading-tight">Editorially reviewed — not a pay-to-play directory</span>
+            </div>
+            <div class="flex items-start gap-4 group">
+              <span class="text-2xl flex-shrink-0 group-hover:scale-125 transition-transform">🔗</span>
+              <span class="text-sm font-medium text-gray-500 leading-tight">Direct link to your website from every listing</span>
+            </div>
+            <div class="flex items-start gap-4 group">
+              <span class="text-2xl flex-shrink-0 group-hover:scale-125 transition-transform">📍</span>
+              <span class="text-sm font-medium text-gray-500 leading-tight">Show up in category searches and map results</span>
+            </div>
+            <div class="flex items-start gap-4 group">
+              <span class="text-2xl flex-shrink-0 group-hover:scale-125 transition-transform">💬</span>
+              <span class="text-sm font-medium text-gray-500 leading-tight">Build trust with first-time visitors</span>
+            </div>
+          </div>
+          <div class="mt-10 pt-8 border-t border-gray-200/50 relative z-10">
+            <p class="text-xs font-medium text-gray-400 leading-relaxed italic">
+              Listing review takes 3–5 business days. We verify all submissions before publishing. No payment required for basic listings.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Form -->
+    <section class="py-24 px-6 bg-gray-50/50">
+      <div class="max-w-4xl mx-auto">
+        <AddListingForm client:load />
+      </div>
+    </section>
+
+  </main>
+</BaseLayout>

@@ -1,0 +1,231 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+
+const WINTER_ACTIVITIES = [
+  {
+    title: 'Skiing',
+    desc: 'Killington provides skiers and riders of all ability levels a choice of wide-open groomed cruisers, narrow classic New England runs, moguls, steeps and trees all serviced by 22 lifts including two express gondolas and a high-speed six-person bubble chair.',
+    img: '/images/activities/winter/skiing.png',
+    href: '/killington-resort',
+    tag: 'Most Popular',
+  },
+  {
+    title: 'Hiking',
+    desc: 'Great hiking trails for all fitness levels. From casual and gradual to steep and challenging terrain that crosses the Appalachian Trail. There are 8 moderate trails in Woodstock ranging from 1.6 to 4.8 miles and from 692 to 2,450 feet above sea level.',
+    img: '/images/activities/winter/hiking.png',
+    href: '/listings?category=outdoor-recreation',
+    tag: 'Outdoor',
+  },
+  {
+    title: 'Exploring',
+    desc: "Shopping in Woodstock, Vermont if you are looking for amazing cheese, Vermont maple syrup, great craft beer, homespun goods, and fun shopping, Woodstock has it all and more. Gillingham's General Store is exactly what you would expect from a Vermont general store.",
+    img: '/images/activities/winter/exploring.png',
+    href: '/listings?category=places-to-shop',
+    tag: 'Culture',
+  },
+  {
+    title: 'Maple Sugaring',
+    desc: "Vermont is the nation's leading producer of maple syrup. Producing over 2 million gallons of syrup in 2020, Vermont generated over 50 percent of the country's maple syrup coming from more than 1,500 sugar houses statewide.",
+    img: '/images/activities/winter/maple-sugaring.png',
+    href: '/listings?category=local-flavor',
+    tag: 'Local',
+  },
+  {
+    title: 'Glass Blowing',
+    desc: 'Simon Pearce is a world-renowned maker of fine handblown glass dinnerware and decor, as well as handcrafted pottery collections. Each expertly hand-crafted piece is made from the highest quality material in a simple yet elegant style that translates easily from everyday use to elegant entertaining.',
+    img: '/images/activities/winter/glass-blowing.png',
+    href: '/listings?category=arts-and-culture',
+    tag: 'Arts',
+  },
+  {
+    title: 'Science Museum',
+    desc: "The Montshire is an award-winning hands-on science museum. You'll experience over 140 exciting exhibits relating to the natural and physical sciences, ecology, and technology. As a 110-acre museum on the Connecticut River, there's always plenty to explore, both indoors and out!",
+    img: '/images/activities/winter/science-museum.png',
+    href: '/listings?category=museums',
+    tag: 'Family',
+  },
+  {
+    title: 'Snowshoeing',
+    desc: 'Snowshoe centers offer hundreds of miles of groomed trails or for the more adventurous, back-country trails offer challenging and solitary excursions. Guided and self-guided snowshoeing tours and guides are abundant in Vermont.',
+    img: '/images/activities/winter/snowshoeing.png',
+    href: '/listings?category=nordic-ski',
+    tag: 'Adventure',
+  },
+  {
+    title: 'Snowmobile Tours',
+    desc: "Let the excitement begin with a custom-guided snowmobile tour of the Killington Mountains. No clutch or shifting just hit the throttle and go! Experienced guides are there to show you the way, taking you to breathtaking views and a variety of Killington's peaks.",
+    img: '/images/activities/winter/snowmobile-tours.png',
+    href: '/listings?category=snowmobile',
+    tag: 'Thrill',
+  },
+  {
+    title: 'Dog Sledding',
+    desc: 'Have a one-of-a-kind experience with a ride through the snow. Braeburn Siberians offers 30-minute and 90-minute excursions with 43 purebred Siberian huskies located in the Upper Valley between i-89 and i-91. (~1.25 hrs away)',
+    img: '/images/activities/winter/dog-sledding.png',
+    href: '/listings',
+    tag: 'Family',
+  },
+  {
+    title: 'Mountain Coaster',
+    desc: 'Next to skiing or riding, the Beast Mountain Coaster is the ultimate thrill. Located at Snowshed Lodge, this 4,800-foot-long alpine coaster twists and turns through the woods with 360-degree corkscrews and all-age excitement.',
+    img: '/images/activities/winter/mountain-coaster.png',
+    href: '/listings?category=adventure',
+    tag: 'Thrill',
+  },
+  {
+    title: 'Brewery Tours',
+    desc: 'Long Trail Brewing Company is a regional brewery in Bridgewater Corners, Vermont. Founded in 1989 in the basement of the Bridgewater Woolen Mill, the company relocated to its current brewing facility and visitor center.',
+    img: '/images/activities/winter/brewery-tours.png',
+    href: '/listings?category=breweries',
+    tag: 'Local',
+  },
+  {
+    title: 'Sleigh Rides',
+    desc: 'Woodstock offers plenty of opportunities for people of all ages and abilities. With advance notice, you can book a private sleigh ride through the winter wonderland. Bring along your warm drink and take in the scenic views.',
+    img: '/images/activities/winter/sleigh-rides.png',
+    href: '/listings',
+    tag: 'Family',
+  },
+  {
+    title: 'Explore Covered Bridges',
+    desc: 'There are just over 100 authentic covered bridges in Vermont, giving the state the highest number of covered bridges per square mile in the United States. Perfect for a scenic winter drive.',
+    img: '/images/activities/winter/covered-bridges.png',
+    href: '/listings?category=sightseeing',
+    tag: 'Sightseeing',
+  },
+  {
+    title: 'Tubing',
+    desc: 'The Killington Tubing Park is located at the Clubhouse on East Mountain Road across from the Killington Grand Resort Hotel and offers a multi-lane, lift-serviced good time for everyone. Great for hosting birthday parties for all ages.',
+    img: '/images/activities/winter/tubing.png',
+    href: '/listings?category=adventure',
+    tag: 'Family',
+  },
+  {
+    title: 'Dine at Ledgewood Yurt',
+    desc: 'Tucked away, the Ledgewood Yurt is a ski-in-ski-out restaurant and bar. Accessible by snowshoe or an after-hours snowcat-drawn sleigh ride, ending with a gourmet five-course dinner.',
+    img: '/images/activities/winter/yurt-dining.png',
+    href: '/listings?category=places-to-eat',
+    tag: 'Dining',
+  },
+  {
+    title: "Women's FIS World Cup",
+    desc: "Killington Cup is a festival of skiing for fans and athletes, and over the last four years has become one of the top three events on the Women's FIS World Cup tour, inspiring the next generation of ski racers.",
+    img: '/images/activities/winter/world-cup.png',
+    href: '/races-events',
+    tag: 'Event',
+  },
+  {
+    title: 'Bear Mountain Mogul Challenge',
+    desc: "The Bear Mountain Mogul Challenge is more than a bump comp—it's an excuse for a party. Coming each year in April, it is the unofficial end-of-season celebration for the hard-core bump skiers.",
+    img: '/images/activities/winter/mogul-challenge.png',
+    href: '/races-events',
+    tag: 'Event',
+  },
+  {
+    title: 'Fat Tire Mountain Biking',
+    desc: 'Alpine Bike Works operates the winter Fat Bike Vermont rental program, working with Mountain Meadows XC Center and Killington Resort to build out a network of groomed singletrack.',
+    img: '/images/activities/winter/fat-biking.png',
+    href: '/listings?category=adventure',
+    tag: 'Adventure',
+  },
+];
+---
+
+<BaseLayout
+  title="Winter in Killington"
+  description="The Beast of the East delivers the longest ski season in the East — plus snowmobiling, dog sledding, a legendary après scene, and world-class racing."
+>
+  <main class="min-h-screen bg-white font-body">
+    <Hero
+      title='<span class="text-white">Winter in</span> <span class="text-brand-blue">Killington</span>'
+      subtitle='The Beast of the East delivers the <span class="text-brand-blue">longest ski season in the East</span> — plus snowmobiling, dog sledding, a legendary après scene, and world-class racing.'
+      image="/images/hero/winter-activities-hero.webp"
+    />
+
+    <!-- Hero Stats -->
+    <div class="relative z-20 -mt-12 max-w-6xl mx-auto px-6">
+      <div class="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl p-8 border border-white/20 inline-flex items-center gap-8">
+        <div class="flex items-center gap-3">
+          <span class="w-2 h-2 rounded-full bg-brand-green animate-pulse"></span>
+          <p class="uppercase tracking-[0.3em] text-[10px] font-black text-brand-navy/60">November – April</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats bar -->
+    <section class="bg-white border-b border-gray-100 py-12 px-6">
+      <div class="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-12 text-center">
+        {[
+          { stat: '1,509', label: 'Skiable Acres' },
+          { stat: '140', label: 'Trails' },
+          { stat: '22', label: 'Lifts' },
+          { stat: '6+', label: 'Months of Season' },
+        ].map(({ stat, label }) => (
+          <div class="group">
+            <p class="text-4xl md:text-5xl font-heading font-black text-brand-green mb-2 transform group-hover:scale-110 transition-transform">{stat}</p>
+            <p class="text-[10px] text-gray-300 font-black uppercase tracking-widest">{label}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Activities grid -->
+    <section class="py-24 px-6 bg-gray-50/50">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-20">
+          <h2 class="text-3xl md:text-5xl font-heading font-black text-brand-navy mb-6 tracking-tight uppercase">The Winter <span class="text-brand-green">Playbook</span></h2>
+          <p class="text-gray-400 text-xl font-medium max-w-2xl mx-auto">From the mountain to the après — your complete guide to the best winter experiences</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          {WINTER_ACTIVITIES.map((act) => (
+            <a
+              href={act.href}
+              class="bg-white rounded-[2.5rem] overflow-hidden shadow-premium hover:shadow-2xl transition-all duration-500 group flex flex-col transform hover:-translate-y-2 border border-gray-50"
+            >
+              <div class="relative h-60 overflow-hidden">
+                <img src={act.img} alt={act.title} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                <div class="absolute top-6 left-6">
+                  <span class="bg-white/90 backdrop-blur-md text-brand-navy text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg">
+                    {act.tag}
+                  </span>
+                </div>
+              </div>
+              <div class="p-8 lg:p-10 flex flex-col flex-1">
+                <h3 class="font-heading font-black text-brand-navy text-xl mb-4 group-hover:text-brand-green transition-colors leading-tight">{act.title}</h3>
+                <p class="text-gray-400 font-medium leading-relaxed flex-1 mb-8 line-clamp-4">{act.desc}</p>
+                <div class="flex items-center gap-2 text-brand-green font-black text-xs uppercase tracking-widest group-hover:gap-3 transition-all">
+                  Explore Experience
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 px-6 text-center">
+      <div class="max-w-4xl mx-auto bg-gray-50 rounded-[4rem] py-16 px-10 border border-gray-100">
+        <h2 class="text-4xl md:text-5xl font-heading font-black text-brand-navy mb-4 tracking-tight uppercase">Plan Your <span class="text-brand-green">Winter Trip</span></h2>
+        <p class="text-gray-400 text-xl font-medium mb-12 max-w-2xl mx-auto">Browse accommodations, check conditions, and find everything you need for the perfect Killington winter getaway.</p>
+        <div class="flex gap-6 justify-center flex-wrap">
+          <a
+            href="/ski-conditions"
+            class="bg-brand-green text-white font-black px-12 py-5 rounded-full hover:bg-brand-green/90 transition-all shadow-xl uppercase tracking-widest text-sm"
+          >
+            Check Conditions
+          </a>
+          <a
+            href="/listings"
+            class="bg-brand-navy text-white font-black px-12 py-5 rounded-full hover:bg-brand-navy/90 transition-all shadow-xl uppercase tracking-widest text-sm"
+          >
+            Browse Listings
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

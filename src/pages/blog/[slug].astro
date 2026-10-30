@@ -29,6 +29,35 @@ const formattedDate = new Date(entry.data.date).toLocaleDateString('en-US', {
   day: 'numeric',
   year: 'numeric'
 });
+
+// Schema.org BlogPosting structured data
+const blogPostSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": entry.data.title,
+  "description": entry.data.excerpt,
+  "image": entry.data.image.startsWith('http')
+    ? entry.data.image
+    : `https://killingtongetaway.com${entry.data.image}`,
+  "datePublished": new Date(entry.data.date).toISOString(),
+  "dateModified": new Date(entry.data.date).toISOString(),
+  "author": {
+    "@type": "Person",
+    "name": entry.data.author
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Killington Getaway",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://killingtongetaway.com/icon.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `https://killingtongetaway.com/blog/${entry.slug}`
+  }
+};
 ---
 
 <BaseLayout
@@ -36,6 +65,9 @@ const formattedDate = new Date(entry.data.date).toLocaleDateString('en-US', {
   description={entry.data.excerpt}
   image={`https://killingtongetaway.com${entry.data.image}`}
 >
+  <!-- BlogPosting Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(blogPostSchema)} />
+
   <main class="min-h-screen bg-white">
     <!-- Hero Section -->
     <div class="relative w-full pt-16 pb-12 overflow-hidden">

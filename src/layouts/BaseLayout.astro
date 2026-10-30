@@ -10,6 +10,35 @@ interface Props {
 }
 
 const { title, description = "Discover the best restaurants, breweries, ski shops, and summer activities in Killington, Vermont.", image = "https://killingtongetaway.com/opengraph-image.png" } = Astro.props;
+
+// Schema.org LocalBusiness structured data
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Killington Getaway",
+  "description": "Your local guide to Killington, Vermont — restaurants, breweries, ski shops, vacation rentals, and year-round activities.",
+  "url": "https://killingtongetaway.com",
+  "logo": "https://killingtongetaway.com/icon.png",
+  "image": "https://killingtongetaway.com/opengraph-image.png",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Killington",
+    "addressRegion": "VT",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 43.6045,
+    "longitude": -72.8201
+  },
+  "areaServed": {
+    "@type": "Place",
+    "name": "Killington, Vermont"
+  },
+  "sameAs": [
+    "https://www.instagram.com/killingtongetaway"
+  ]
+};
 ---
 
 <!doctype html>
@@ -40,6 +69,9 @@ const { title, description = "Discover the best restaurants, breweries, ski shop
     <meta property="twitter:image" content={image} />
 
     <link rel="canonical" href={Astro.url} />
+
+    <!-- LocalBusiness Schema -->
+    <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
   </head>
   <body class="min-h-full flex flex-col font-body">
     <Navbar client:load />

@@ -1,0 +1,259 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+
+const SUMMER_ACTIVITIES = [
+  {
+    title: 'Hiking',
+    desc: 'Great hiking trails for all fitness levels. From casual and gradual to steep and challenging terrain that crosses the Appalachian Trail. There are 8 moderate trails in Woodstock ranging from 1.6 to 4.8 miles and from 692 to 2,450 feet above sea level.',
+    img: '/images/summer/hiking.jpg',
+    href: '/listings?category=hiking',
+    tag: 'Outdoors',
+  },
+  {
+    title: 'Mountain Biking',
+    desc: "The Killington Bike Park is New England's fastest-growing downhill mountain bike park and features three high-speed lifts serving over 30 miles of trails. From beginner to expert and classic New England to Gravity Logic's signature flow trails.",
+    img: '/images/summer/mountain-biking.jpg',
+    href: '/listings?category=biking',
+    tag: 'Sport',
+  },
+  {
+    title: 'Exploring',
+    desc: "Shopping in Woodstock, Vermont if you are looking for amazing cheese, Vermont maple syrup, great craft beer, homespun goods, and fun shopping, Woodstock has it all and more. Gillingham's General Store is exactly what you would expect from a Vermont general store.",
+    img: '/images/summer/exploring.jpg',
+    href: '/location',
+    tag: 'Explore',
+  },
+  {
+    title: 'Glass Blowing',
+    desc: 'Simon Pearce is a world-renowned maker of fine handblown glass dinnerware and decor, as well as handcrafted pottery collections. Each expertly hand-crafted piece is made from the highest quality material in a simple yet elegant style that translates easily from everyday use to elegant entertaining.',
+    img: '/images/summer/glass-blowing.jpg',
+    href: '/listings?category=arts',
+    tag: 'Arts',
+  },
+  {
+    title: 'Golf',
+    desc: "Killington Resort's golf course is open to the public from May through October. There are also another 8 public golf courses within 20 miles of our house.",
+    img: '/images/summer/golf.jpg',
+    href: '/listings?category=golf',
+    tag: 'Sport',
+  },
+  {
+    title: 'Fishing',
+    desc: 'Vermont is home to world-class fishing, from secluded mountain streams filled with brook trout to the larger lakes where bass, pike, and perch thrive. Whether you are fly fishing on the Ottauquechee or casting a line in a local pond, it is the perfect way to enjoy a peaceful day on the water.',
+    img: '/images/summer/fishing.jpg',
+    href: '/listings?category=fishing',
+    tag: 'Outdoors',
+  },
+  {
+    title: 'Land Rover Driving School',
+    desc: 'The new Land Rover Experience Driving School is open year-round and features off-road driving instruction in all conditions. Participants experience numerous challenges on the 80-acre purpose-built course, with an extensive trail system for exploration.',
+    img: '/images/summer/land-rover-driving-school.jpg',
+    href: '/listings?category=adventure',
+    tag: 'Thrill',
+  },
+  {
+    title: 'Farm Visits',
+    desc: "With its deep-rooted agricultural traditions, ideal moderate climate, and a large percentage of open farmland, Vermont has grown to be the leading producer of alpacas in New England. Explore cheese-making factories, dairy farms, and corn mazes all within a short drive.",
+    img: '/images/summer/farm-visits.jpg',
+    href: '/listings?category=farms',
+    tag: 'Culture',
+  },
+  {
+    title: 'Adventure Tours',
+    desc: 'Let the excitement begin with a custom-guided ATV/UTV adventure tour of the Killington Mountains. No clutch or shifting just hit the pedal and go! Experienced guides are there to show you the way, and help you in any way they can.',
+    img: '/images/summer/adventure-tours.jpg',
+    href: '/listings?category=adventure',
+    tag: 'Family',
+  },
+  {
+    title: 'Vermont Bike and Brew',
+    desc: 'Brewery tours at Vermont Bike & Brew are all self-guided. In addition to a brewery stop, all routes highlight small, local farm stands, cafes, and creameries, and link together the most scenic farmland, dirt roads, and mountain views in each area.',
+    img: '/images/summer/vermont-bike-and-brew.jpg',
+    href: '/listings?category=breweries',
+    tag: 'Local',
+  },
+  {
+    title: 'Paddle Board (SUP)',
+    desc: 'Vermont has a few great spots for stand-up paddle boards that are all very accessible. The breathtaking vistas and variety of paddling conditions make Vermont some of the best areas for exploring beautiful, hidden bodies of water.',
+    img: '/images/summer/paddle-board.jpg',
+    href: '/listings?category=sup',
+    tag: 'Water',
+  },
+  {
+    title: 'Orvis Fly Fishing School',
+    desc: "Orvis Fly Fishing School, situated in the heart of Vermont's Green Mountains, offers expert instructors to help you with everything from setting up the rod, to fly selection and knots, to how to safely release your catch.",
+    img: '/images/summer/orvis-fly-fishing-school.jpg',
+    href: '/listings?category=fishing',
+    tag: 'Outdoors',
+  },
+  {
+    title: 'Brewery Tours',
+    desc: 'Long Trail Brewing Company is a regional brewery in Bridgewater Corners, Vermont. Founded in 1989 by Andy Pherson in the basement of the Bridgewater Woolen Mill, the company relocated to its current brewing facility and visitor center.',
+    img: '/images/summer/brewery-tours.jpg',
+    href: '/listings?category=breweries',
+    tag: 'Local',
+  },
+  {
+    title: 'Swimming',
+    desc: 'Here Are 19 Vermont Swimming Holes That Will Make For A Fantastic Summer During the warm summer months, Vermonters are looking for ways to cool down. Lucky for us, Vermont is filled with some pretty awesome swimming holes that are fun, free, and fantastic.',
+    img: '/images/summer/swimming.jpg',
+    href: '/listings?category=swimming',
+    tag: 'Water',
+  },
+  {
+    title: 'Vermont Inst. of Natural Science',
+    desc: "VINS (Vermont Institute of Natural Science), headquartered in Quechee, VT sits on 47 acres of forest, meadow, and rolling hills. VINS features 17 state-of-the-art raptor enclosures that house hawks, eagles, falcons, owls, and other birds of prey.",
+    img: '/images/summer/vins.jpg',
+    href: '/listings?category=culture',
+    tag: 'Culture',
+  },
+  {
+    title: 'Summit Killington Mountain',
+    desc: 'The Killington Peak trail in southern Vermont offers hikers a challenging yet rewarding lengthy hike, with views from the top that will leave you utterly speechless.',
+    img: '/images/summer/summit-killington-mountain.jpg',
+    href: '/listings?category=hiking',
+    tag: 'Scenic',
+  },
+  {
+    title: 'US Historical Sites',
+    desc: "Visit the President Calvin Coolidge State Historic Site. A Museum & Education Center, added in 1972 and enlarged in 2010, houses the exhibits and archives recounting President Calvin Coolidge's private and public lives.",
+    img: '/images/summer/us-historical-sites.jpg',
+    href: '/listings?category=culture',
+    tag: 'Culture',
+  },
+  {
+    title: 'Fall Foliage in Vermont',
+    desc: 'Best time to see fall colors in Green Mountains and Northeast Kingdom The foliage season in Northern Vermont runs from early September to mid-October. The peak usually falls on the last two weeks of September.',
+    img: '/images/summer/fall-foliage.jpg',
+    href: '/blog',
+    tag: 'Seasonal',
+  },
+  {
+    title: 'Explore Covered Bridges',
+    desc: 'There are just over 100 authentic covered bridges in the U.S. state of Vermont, giving the state the highest number of covered bridges per square mile in the United States.',
+    img: '/images/summer/explore-covered-bridges.jpg',
+    href: '/listings?category=bridges',
+    tag: 'Scenic',
+  },
+  {
+    title: 'High Ropes Course',
+    desc: "The Killington Skye Ropes course and the Terra-Maze are pretty impressive contraptions. While you're on the course, the rope attached to your harness is connected on the other end to a clip that moves along a track overhead.",
+    img: '/images/summer/high-ropes-course.jpg',
+    href: '/listings?category=adventure',
+    tag: 'Family',
+  },
+  {
+    title: 'Road Biking',
+    desc: 'Vermont offers plenty of biking for people of all ages and abilities. VT has biking trails, some on old rail trails, biking tours, bike rentals, and gear and equipment. Biking can be a great fun family vacation with the kids.',
+    img: '/images/summer/road-biking.jpg',
+    href: '/listings?category=biking',
+    tag: 'Sport',
+  },
+  {
+    title: 'Mountain Roller Coaster',
+    desc: 'Next to skiing or riding, the Beast Mountain Coaster is the ultimate thrill. Located at Snowshed Lodge, this 4,800-foot-long alpine coaster twists and turns through the woods with 360-degree corkscrews and all-age excitement.',
+    img: '/images/summer/mountain-roller-coaster.jpg',
+    href: '/listings?category=adventure',
+    tag: 'Thrill',
+  },
+  {
+    title: 'Photography',
+    desc: 'Vermont is a favorite destination for those who love beautiful autumn colors and gorgeous mountain views, which means the state has a lot to offer for nature and landscape photographers.',
+    img: '/images/summer/photography.jpg',
+    href: '/listings',
+    tag: 'Arts',
+  },
+  {
+    title: 'Zipline',
+    desc: 'Vermont offers plenty of adventures for the brave of the heart. Killington Adventure Center offers a chance to get your heart racing on one of their dual ziplines that races over both land and water.',
+    img: '/images/summer/zipline.jpg',
+    href: '/listings?category=adventure',
+    tag: 'Thrill',
+  },
+  {
+    title: 'Spa Day',
+    desc: 'The Spa is nestled in The Woods Resort just off the Killington access road. Here you will find 12 private treatment rooms, a fitness center, a sauna, eucalyptus steam, a spectacular indoor pool, and a hot tub.',
+    img: '/images/summer/spa-day.jpg',
+    href: '/listings?category=spa',
+    tag: 'Relax',
+  },
+  {
+    title: 'Gliding',
+    desc: "Located within Vermont's Mad River Valley, Sugarbush Soaring offers flight instruction, scenic rides, rentals, introductory flights, and aero tows. They are open seven days a week from May to October.",
+    img: '/images/summer/gliding.jpg',
+    href: '/listings?category=adventure',
+    tag: 'Thrill',
+  },
+  {
+    title: 'King Arthur Baking Company',
+    desc: "King Arthur Baking Company's Store, Café, and School is packed with everything you need for your very best baking, from hard-to-find ingredients, innovative gadgets, and top-quality bakeware.",
+    img: '/images/summer/king-arthur-baking-company.jpg',
+    href: '/listings?category=food',
+    tag: 'Local',
+  },
+];
+---
+
+<BaseLayout
+  title="Summer in Killington"
+  description="Mountain biking, golf, and adventure await under the summer sun in Killington, Vermont."
+>
+  <main class="min-h-screen bg-white font-body">
+    <Hero
+      title='<span class="text-white">Summer in</span> <span class="text-brand-green">Killington</span>'
+      subtitle='Mountain biking, golf, and adventure await <span class="text-brand-green">under the summer sun</span>.'
+      image="/images/summer/summer-hero.jpg"
+    />
+
+    <!-- Activities grid -->
+    <section class="py-24 px-6 bg-gray-50/50">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-20">
+          <h2 class="text-3xl md:text-5xl font-heading font-black text-brand-navy mb-6 tracking-tight uppercase">Things To Do <span class="text-brand-green">This Summer</span></h2>
+          <p class="text-gray-400 text-xl font-medium max-w-2xl mx-auto">Killington is a four-season destination — here's everything the warm months have to offer</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          {SUMMER_ACTIVITIES.map((act) => (
+            <a
+              href={act.href}
+              class="bg-white rounded-[2.5rem] overflow-hidden shadow-premium hover:shadow-2xl transition-all duration-500 group flex flex-col transform hover:-translate-y-2 border border-gray-50"
+            >
+              <div class="relative h-60 overflow-hidden">
+                <img src={act.img} alt={act.title} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                <div class="absolute top-6 left-6">
+                  <span class="bg-white/90 backdrop-blur-md text-brand-navy text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg">
+                    {act.tag}
+                  </span>
+                </div>
+              </div>
+              <div class="p-8 lg:p-10 flex flex-col flex-1">
+                <h3 class="font-heading font-black text-brand-navy text-xl mb-4 group-hover:text-brand-green transition-colors leading-tight">{act.title}</h3>
+                <p class="text-gray-400 font-medium leading-relaxed flex-1 mb-8">{act.desc}</p>
+                <div class="flex items-center gap-2 text-brand-green font-black text-xs uppercase tracking-widest group-hover:gap-3 transition-all">
+                  Explore Activity
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 px-6 text-center">
+      <div class="max-w-4xl mx-auto bg-gray-50 rounded-[4rem] py-16 px-10 border border-gray-100">
+        <h2 class="text-4xl md:text-5xl font-heading font-black text-brand-navy mb-4 tracking-tight uppercase">Ready to <span class="text-brand-green">Explore?</span></h2>
+        <p class="text-gray-400 text-xl font-medium mb-12 max-w-2xl mx-auto">Browse our full directory of summer activities, restaurants, and experiences near Killington.</p>
+        <a
+          href="/listings"
+          class="bg-brand-navy text-white font-black px-12 py-5 rounded-full hover:bg-brand-navy/90 transition-all shadow-xl uppercase tracking-widest text-sm"
+        >
+          Browse All Listings
+        </a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

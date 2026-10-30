@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+
+const TERMS_SECTIONS = [
+  {
+    title: '1. Acceptance',
+    content: 'By accessing or using killingtongetaway.com (the "Site"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use the Site. We reserve the right to modify these Terms at any time, and your continued use of the Site constitutes acceptance of those changes.',
+  },
+  {
+    title: '2. Use of the Site',
+    content: 'You agree to use the Site only for lawful purposes and in a manner that does not infringe the rights of others. You may not:',
+    list: [
+      'Use the Site in any way that violates applicable local, state, national, or international law',
+      'Transmit any unsolicited or unauthorized advertising or promotional material',
+      'Attempt to gain unauthorized access to any portion of the Site or any systems connected to the Site',
+      'Use automated means to scrape, crawl, or index the Site without our prior written consent',
+      'Submit false, misleading, or fraudulent listing information',
+    ],
+    isProhibited: true,
+  },
+  {
+    title: '3. Intellectual Property',
+    content: 'All content on the Site — including text, images, logos, graphics, and software — is the property of Killington Getaway or its content suppliers and is protected by applicable intellectual property laws. You may not reproduce, distribute, modify, or create derivative works from any content on the Site without our express written permission.',
+  },
+  {
+    title: '4. Third-Party Content',
+    content: 'The Site includes listings and information about third-party businesses. Killington Getaway does not endorse, warrant, or guarantee any third-party business, product, or service listed on the Site. We are not responsible for the accuracy, completeness, or quality of information provided by third-party businesses. Always verify hours, pricing, and availability directly with the business before your visit.',
+  },
+  {
+    title: '5. Affiliate Links',
+    content: 'Some links on the Site are affiliate links. When you click an affiliate link and make a purchase, we may receive a commission. This does not affect the price you pay. We only include affiliate links for products and services we genuinely recommend.',
+    highlight: true,
+  },
+  {
+    title: '6. Warranties',
+    content: 'The Site is provided on an "as is" and "as available" basis without warranties of any kind, either express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, or non-infringement. Killington Getaway does not warrant that the Site will be uninterrupted, error-free, or free of viruses or other harmful components.',
+  },
+  {
+    title: '7. Liability',
+    content: 'To the fullest extent permitted by law, Killington Getaway shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or related to your use of the Site or any information obtained from the Site, even if we have been advised of the possibility of such damages.',
+  },
+  {
+    title: '8. Submissions',
+    content: 'If you submit content to the Site (such as a listing, review, or contact form message), you grant Killington Getaway a non-exclusive, royalty-free, perpetual, worldwide license to use, reproduce, modify, and display that content in connection with the Site. You represent that you have the right to submit such content and that it does not violate any third-party rights.',
+  },
+  {
+    title: '9. Governing Law',
+    content: 'These Terms shall be governed by and construed in accordance with the laws of the State of Vermont, without regard to its conflict of law provisions. Any dispute arising from these Terms shall be subject to the exclusive jurisdiction of the state and federal courts located in Rutland County, Vermont.',
+  },
+];
+---
+
+<BaseLayout
+  title="Terms of Service"
+  description="Terms of Service for Killington Getaway website."
+>
+  <main class="min-h-screen bg-white font-body">
+    <Hero
+      title='<span class="text-white">Terms of</span> <span class="text-brand-green">Service</span>'
+      subtitle='Last updated: January 1, 2026'
+      image="/images/hero/ski-conditions-hero.png"
+      opacity={0.6}
+    />
+
+    <section class="py-24 px-6 bg-gray-50/30">
+      <div class="max-w-3xl mx-auto flex flex-col gap-16 text-gray-400 font-medium leading-relaxed">
+
+        {TERMS_SECTIONS.map((section) => (
+          <div class={`bg-white p-10 md:p-12 rounded-[3rem] border shadow-sm ${section.highlight ? 'border-brand-green/20' : 'border-gray-100'}`}>
+            <h2 class="text-2xl font-heading font-black text-brand-navy mb-6 uppercase tracking-tight">{section.title}</h2>
+            <p class="mb-6">{section.content}</p>
+            {section.list && (
+              <ul class="space-y-4">
+                {section.list.map((item) => (
+                  <li class="flex items-start gap-4">
+                    <span class={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black mt-0.5 ${section.isProhibited ? 'bg-red-500/10 text-red-500' : 'bg-brand-green/10 text-brand-green'}`}>
+                      {section.isProhibited ? '✕' : '✓'}
+                    </span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))}
+
+        <!-- Contact Section -->
+        <div class="bg-brand-navy p-10 md:p-12 rounded-[3rem] border border-brand-navy shadow-2xl relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-brand-green/10 rounded-full -mr-16 -mt-16"></div>
+          <h2 class="text-2xl font-heading font-black text-white mb-6 uppercase tracking-tight relative z-10">10. Contact Us</h2>
+          <p class="text-white/40 relative z-10 mb-8">Questions about these Terms? Contact us at:</p>
+          <div class="flex flex-col gap-4 relative z-10">
+            <a href="mailto:hello@killingtongetaway.com" class="flex items-center gap-4 text-white font-black text-sm hover:text-brand-green transition-colors group">
+              <div class="w-10 h-10 rounded-full bg-white/5 text-white/40 flex items-center justify-center group-hover:bg-brand-green group-hover:text-white transition-all">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              </div>
+              <span class="uppercase tracking-widest text-xs">hello@killingtongetaway.com</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+</BaseLayout>

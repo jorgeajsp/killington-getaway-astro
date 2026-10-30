@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ListingsPage from '../../components/react/ListingsPage';
+import listingsData from '../../data/listings.json';
+
+const listings = listingsData.filter((l: any) => !l.draft);
+---
+
+<BaseLayout
+  title="Explore Killington"
+  description="Browse restaurants, breweries, ski shops, hiking trails and more in Killington, Vermont."
+>
+  <main class="min-h-screen bg-white font-body">
+    <ListingsPage client:only="react" listings={listings} />
+  </main>
+</BaseLayout>

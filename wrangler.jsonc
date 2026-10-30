@@ -1,16 +1,28 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "killington-staging",
-  "main": "dist/_worker.js/index.js",
+  "name": "killington-getaway",
+  "pages_build_output_dir": "dist",
   "compatibility_date": "2026-09-11",
+  "vars": {
+    "JWT_SECRET": "KG-JWT-Secret-2026-Secure"
+  },
   "compatibility_flags": [
     "global_fetch_strictly_public"
   ],
   "observability": {
     "enabled": true
   },
-  "assets": {
-    "binding": "ASSETS",
-    "directory": "dist"
-  }
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "killington-cms",
+      "database_id": "9b4f1a33-c88f-472c-990e-5e3d6c544731"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "killington-media"
+    }
+  ]
 }

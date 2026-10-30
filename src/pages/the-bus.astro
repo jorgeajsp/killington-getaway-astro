@@ -1,0 +1,214 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+
+const ROUTES = [
+  {
+    name: 'Route 11 – Rutland / Killington Commuter',
+    color: '#00B4D8',
+    description: 'The primary commuter route linking Rutland city center to Killington Resort. Runs daily during ski season with enhanced frequency on weekends.',
+    stops: [
+      { stop: "Rutland Transit Hub (Merchant's Row)", time: '—' },
+      { stop: 'Rutland Park & Ride (Rte 4)', time: '+5 min' },
+      { stop: 'Mendon Village', time: '+12 min' },
+      { stop: 'Sherburne Pass (Pico Mountain)', time: '+22 min' },
+      { stop: 'Killington Road Intersection (Rte 4)', time: '+28 min' },
+      { stop: 'Killington Road Mid-Mountain', time: '+35 min' },
+      { stop: 'Snowshed Base Lodge', time: '+42 min' },
+      { stop: 'K-1 Base Lodge', time: '+48 min' },
+    ],
+    departures: {
+      northbound: ['7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM', '12:00 PM', '2:00 PM'],
+      southbound: ['9:30 AM', '11:30 AM', '1:30 PM', '3:30 PM', '4:30 PM', '5:30 PM'],
+    },
+    frequency: 'Every 60 min peak hours; every 2 hrs off-peak',
+    fare: 'Free with Killington pass. $2 without. Monthly passes $42.',
+    season: 'November – April (daily). May – October (weekdays only).',
+  },
+  {
+    name: 'Route 3 – Rutland / White River Junction',
+    color: '#2d94e3',
+    description: 'Connects Rutland to White River Junction with stops in Woodstock, Quechee, and West Hartford. Connects to Amtrak Vermonter service.',
+    stops: [
+      { stop: 'Rutland Transit Hub', time: '—' },
+      { stop: 'Castleton', time: '+22 min' },
+      { stop: 'Woodstock Village Green', time: '+50 min' },
+      { stop: 'Quechee Village', time: '+60 min' },
+      { stop: 'White River Junction Amtrak Station', time: '+80 min' },
+    ],
+    departures: {
+      northbound: ['7:15 AM', '10:15 AM', '1:15 PM', '4:15 PM'],
+      southbound: ['8:45 AM', '11:45 AM', '2:45 PM', '5:45 PM'],
+    },
+    frequency: 'Every ~3 hours',
+    fare: '$2 per trip. Free transfers within 90 minutes.',
+    season: 'Year-round.',
+  },
+  {
+    name: 'Route 21 – Killington Local Loop',
+    color: '#D97706',
+    description: 'Short-hop local loop connecting accommodations along Killington Road to the base lodges and town center. Popular with guests staying in condos off the main road.',
+    stops: [
+      { stop: 'Killington Grand Resort Hotel', time: '—' },
+      { stop: 'Cascade Lodge', time: '+5 min' },
+      { stop: 'Sunrise Village', time: '+8 min' },
+      { stop: 'Birch Ridge Inn', time: '+12 min' },
+      { stop: 'Killington Road / Rte 4 Intersection', time: '+18 min' },
+      { stop: 'Snowshed Base', time: '+24 min' },
+      { stop: 'Bear Mountain Base', time: '+30 min' },
+    ],
+    departures: {
+      northbound: ['7:30 AM', '8:00 AM', '8:30 AM', '9:00 AM', '9:30 AM', '10:00 AM', '3:30 PM', '4:00 PM', '4:30 PM'],
+      southbound: ['8:45 AM', '9:15 AM', '9:45 AM', '10:15 AM', '3:45 PM', '4:15 PM', '4:45 PM', '5:15 PM'],
+    },
+    frequency: 'Every 30 min during morning rush and afternoon return',
+    fare: 'Free during ski season.',
+    season: 'December – April only.',
+  },
+];
+
+const INFO_PANELS = [
+  {
+    title: 'Amtrak Connection',
+    body: 'The Amtrak Vermonter runs daily between New York Penn Station and St. Albans, VT with a stop at White River Junction. Route 3 connects White River Junction to Rutland.',
+    link: 'https://www.amtrak.com/vermonter-train',
+    label: 'Amtrak Schedule →',
+    color: '#2d94e3',
+  },
+  {
+    title: 'Park & Ride Lots',
+    body: "Free Park & Ride facilities at the Rutland Transit Hub (Merchant's Row) and the Rte 4 Rutland lot. Leave your car and ride in — especially useful on peak powder days.",
+    link: 'https://www.thebus.com/park-and-ride',
+    label: 'Park & Ride Info →',
+    color: '#3498DB',
+  },
+  {
+    title: 'Accessibility',
+    body: 'All Green Mountain Transit buses are ADA accessible with wheelchair ramps, kneeling capability, and audio/visual stop announcements. Service animals welcome.',
+    link: 'https://www.thebus.com/accessibility',
+    label: 'Accessibility Info →',
+    color: '#0B1619',
+  },
+];
+---
+
+<BaseLayout
+  title="The Bus"
+  description="Green Mountain Transit routes connecting Killington to Rutland, White River Junction, and local accommodations."
+>
+  <main class="min-h-screen bg-white font-body">
+    <Hero
+      title='<span class="text-white">The</span> <span class="text-brand-green">Bus</span>'
+      subtitle='Green Mountain Transit routes connecting <span class="text-brand-green">Killington to the wider Vermont network</span>.'
+      image="/images/hero/the-bus-main.png"
+      opacity={1.1}
+    />
+
+    <!-- Route cards -->
+    <section class="py-24 px-6 bg-gray-50/50">
+      <div class="max-w-5xl mx-auto flex flex-col gap-16">
+        {ROUTES.map((r) => (
+          <div class="bg-white rounded-[3rem] overflow-hidden shadow-premium border border-gray-50 transition-all duration-500 hover:shadow-2xl">
+            <!-- Route header -->
+            <div class="px-10 pt-10 pb-8 border-b border-gray-50" style={`border-top: 8px solid ${r.color}`}>
+              <h2 class="text-2xl font-heading font-black text-brand-navy uppercase tracking-tight mb-2">{r.name}</h2>
+              <p class="text-gray-400 font-medium leading-relaxed">{r.description}</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 divide-y lg:divide-y-0 lg:divide-x divide-gray-100">
+              <!-- Stops -->
+              <div class="p-10">
+                <h3 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-300 mb-8">Route Stops</h3>
+                <div class="flex flex-col gap-0">
+                  {r.stops.map((s, i) => (
+                    <div class="flex items-start gap-6 group">
+                      <div class="flex flex-col items-center pt-1">
+                        <div
+                          class="w-4 h-4 rounded-full border-4 flex-shrink-0 transition-all group-hover:scale-125"
+                          style={`border-color: ${r.color}; background-color: ${i === 0 || i === r.stops.length - 1 ? r.color : 'white'}`}
+                        ></div>
+                        {i < r.stops.length - 1 && <div class="w-[2px] h-10 mt-1 bg-gray-100"></div>}
+                      </div>
+                      <div class="flex items-center justify-between flex-1 pb-6 border-b border-transparent group-hover:border-gray-50 transition-colors">
+                        <span class="text-brand-navy font-bold">{s.stop}</span>
+                        <span class="text-[10px] font-black font-mono text-gray-300 uppercase tracking-widest bg-gray-50 px-3 py-1 rounded-lg">{s.time}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <!-- Schedule -->
+              <div class="p-10 bg-gray-50/30">
+                <h3 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-300 mb-8">Origin Departures</h3>
+                <div class="mb-10">
+                  <p class="text-[10px] font-black text-brand-navy uppercase tracking-widest mb-4 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-brand-green"></span>
+                    Toward Resort
+                  </p>
+                  <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    {r.departures.northbound.map((t) => (
+                      <span class="text-[11px] font-black font-mono text-center px-4 py-2.5 rounded-xl bg-white border border-gray-100 text-brand-navy/60 shadow-sm hover:border-brand-green hover:text-brand-green transition-all">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div class="mb-10">
+                  <p class="text-[10px] font-black text-brand-navy uppercase tracking-widest mb-4 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-brand-blue"></span>
+                    Return to Origin
+                  </p>
+                  <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    {r.departures.southbound.map((t) => (
+                      <span class="text-[11px] font-black font-mono text-center px-4 py-2.5 rounded-xl bg-white border border-gray-100 text-brand-navy/60 shadow-sm hover:border-brand-green hover:text-brand-green transition-all">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div class="flex flex-col gap-4 text-xs text-gray-400 border-t border-gray-100 pt-8">
+                  <p class="flex justify-between items-center"><span class="font-black uppercase tracking-widest text-brand-navy">Frequency</span> {r.frequency}</p>
+                  <p class="flex justify-between items-center"><span class="font-black uppercase tracking-widest text-brand-navy">Fare</span> {r.fare}</p>
+                  <p class="flex justify-between items-center"><span class="font-black uppercase tracking-widest text-brand-navy">Season</span> {r.season}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Info panels -->
+    <section class="py-24 px-6 bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {INFO_PANELS.map((c) => (
+            <div class="bg-white border border-gray-100 rounded-[2.5rem] p-10 flex flex-col hover:shadow-premium transition-all duration-300 transform hover:-translate-y-2">
+              <h3 class="font-heading font-black text-brand-navy text-xl mb-4 uppercase tracking-tight">{c.title}</h3>
+              <p class="text-gray-400 font-medium leading-relaxed flex-1 mb-8">{c.body}</p>
+              <a href={c.link} target="_blank" rel="noopener noreferrer" class="text-[10px] font-black uppercase tracking-widest hover:gap-3 flex items-center transition-all" style={`color: ${c.color}`}>
+                {c.label}
+              </a>
+            </div>
+          ))}
+        </div>
+        <div class="text-center mt-24">
+          <div class="bg-gray-50 rounded-[4rem] py-16 px-10 border border-gray-100 max-w-4xl mx-auto">
+            <p class="text-gray-400 text-xl font-medium mb-12 max-w-2xl mx-auto leading-relaxed">
+              For real-time tracking, alerts, and full system maps, please visit the official Green Mountain Transit website.
+            </p>
+            <a
+              href="https://www.thebus.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="bg-brand-navy text-white font-black px-12 py-5 rounded-full hover:bg-brand-navy/90 transition-all shadow-xl uppercase tracking-widest text-sm"
+            >
+              Visit thebus.com
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

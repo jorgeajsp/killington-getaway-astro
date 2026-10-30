@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+
+const LESSONS = [
+  {
+    title: "Adult Group Lessons",
+    desc: "Group lessons are a fun and social way to improve your skills. Groups are divided by ability level so you'll be with others at your stage.",
+    features: ["Ages 16+", "Full day or Half day", "All ability levels welcome"]
+  },
+  {
+    title: "Private Lessons",
+    desc: "The fastest way to improve. Get 1-on-1 attention from a top instructor and priority lift line access.",
+    features: ["Personalized coaching", "Up to 5 people in a group", "Priority lift access"]
+  },
+  {
+    title: "Youth Programs",
+    desc: "Our world-class children's programs focus on fun, safety, and learning for kids of all ages.",
+    features: ["Ages 4-15", "Lunch included in full day", "Skill-based grouping"]
+  }
+];
+---
+
+<BaseLayout
+  title="Ski & Snowboard Lessons"
+  description="Learn from the best on the Beast of the East — ski and snowboard lessons at Killington Resort."
+>
+  <main class="min-h-screen bg-white font-body">
+    <Hero
+      title='<span class="text-white">Ski & Snowboard</span> <span class="text-brand-green">Lessons</span>'
+      subtitle="Learn from the best on the Beast of the East."
+      image="/images/blog/season-pass.webp"
+    />
+
+    <section class="py-24 px-6">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-heading font-black text-brand-navy tracking-tight uppercase mb-6">
+            Progression For Everyone
+          </h2>
+          <p class="text-gray-500 text-xl leading-relaxed">
+            Whether you're stepping onto the snow for the first time or looking to master the bumps and trees, Killington's Snowsports School has a program for you.
+          </p>
+        </div>
+
+        <div class="space-y-12">
+          {LESSONS.map((lesson) => (
+            <div class="bg-gray-50 rounded-[2.5rem] p-10 md:p-12 border border-gray-100 flex flex-col md:flex-row gap-10 items-start">
+              <div class="flex-1">
+                <h3 class="text-3xl font-black text-brand-navy uppercase mb-4">{lesson.title}</h3>
+                <p class="text-gray-600 leading-relaxed mb-6 text-lg">{lesson.desc}</p>
+                <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {lesson.features.map((f) => (
+                    <li class="flex items-center gap-2 text-sm font-bold text-gray-500 uppercase tracking-tight">
+                      <span class="w-2 h-2 bg-brand-green rounded-full"></span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="mt-20 p-12 bg-gray-50 rounded-[3rem] border border-gray-200">
+          <h3 class="text-2xl font-black text-brand-navy uppercase mb-6 text-center">First Time on the Snow?</h3>
+          <p class="text-gray-600 text-center mb-8 max-w-2xl mx-auto">
+            Our 4-day Learn to Ski/Snowboard program is the best value in the East. Complete all 4 days and get a FREE season pass for the rest of the year!
+          </p>
+          <div class="flex justify-center">
+            <a
+              href="https://www.killington.com/plan-your-trip/lessons-rentals/lessons"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="bg-brand-navy text-white font-black px-12 py-4 rounded-full uppercase tracking-widest hover:bg-brand-green transition-colors shadow-lg"
+            >
+              Book Your Lesson
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

@@ -1,0 +1,284 @@
+---
+interface Props {
+  title: string;
+  user?: {
+    id: string;
+    email: string;
+    name: string | null;
+    role: string;
+  };
+}
+
+const { title, user } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>{title} | Killington Getaway Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+      min-height: 100vh;
+    }
+
+    .admin-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 260px;
+      background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      padding: 24px 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo {
+      padding: 0 24px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 24px;
+    }
+
+    .logo h1 {
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .logo span {
+      color: #3b82f6;
+    }
+
+    .nav-section {
+      padding: 0 12px;
+      margin-bottom: 24px;
+    }
+
+    .nav-section-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #64748b;
+      padding: 0 12px;
+      margin-bottom: 8px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: all 0.15s;
+    }
+
+    .nav-link:hover {
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+
+    .nav-link.active {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .nav-link svg {
+      width: 20px;
+      height: 20px;
+      opacity: 0.7;
+    }
+
+    .nav-link.active svg {
+      opacity: 1;
+    }
+
+    .user-section {
+      margin-top: auto;
+      padding: 16px 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #3b82f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .user-details {
+      flex: 1;
+    }
+
+    .user-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .user-role {
+      font-size: 12px;
+      color: #64748b;
+      text-transform: capitalize;
+    }
+
+    .logout-btn {
+      width: 100%;
+      padding: 8px 12px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      color: #cbd5e1;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .logout-btn:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.3);
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 32px;
+      overflow-y: auto;
+    }
+
+    .page-header {
+      margin-bottom: 32px;
+    }
+
+    .page-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-container">
+    {user && (
+      <aside class="sidebar">
+        <div class="logo">
+          <h1>Killington <span>CMS</span></h1>
+        </div>
+
+        <nav class="nav-section">
+          <div class="nav-section-title">Content</div>
+          <a href="/admin" class="nav-link">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            Dashboard
+          </a>
+          <a href="/admin/blog" class="nav-link">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+            </svg>
+            Blog Posts
+          </a>
+          <a href="/admin/listings" class="nav-link">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+            Listings
+          </a>
+          <a href="/admin/media" class="nav-link">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            Media
+          </a>
+        </nav>
+
+        {(user.role === 'super_admin' || user.role === 'admin') && (
+          <nav class="nav-section">
+            <div class="nav-section-title">Administration</div>
+            {user.role === 'super_admin' && (
+              <a href="/admin/users" class="nav-link">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                Users
+              </a>
+            )}
+            <a href="/admin/audit" class="nav-link">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+              </svg>
+              Audit Log
+            </a>
+          </nav>
+        )}
+
+        <div class="user-section">
+          <div class="user-info">
+            <div class="user-avatar">
+              {user.name ? user.name.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase()}
+            </div>
+            <div class="user-details">
+              <div class="user-name">{user.name || user.email}</div>
+              <div class="user-role">{user.role.replace('_', ' ')}</div>
+            </div>
+          </div>
+          <button class="logout-btn" id="logout-btn">Sign Out</button>
+        </div>
+      </aside>
+    )}
+
+    <main class="main-content">
+      <slot />
+    </main>
+  </div>
+
+  <script>
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', async () => {
+        try {
+          await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+          window.location.href = '/admin/login';
+        } catch (e) {
+          console.error('Logout failed:', e);
+          window.location.href = '/admin/login';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

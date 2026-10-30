@@ -1,0 +1,145 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+
+const GUIDE_SECTIONS = [
+  {
+    icon: '🍽️',
+    title: 'Restaurants, Cafés & Bars',
+    desc: "Explore our handpicked selection of Killington's finest dining — from après-ski classics and craft cocktail bars to cozy Vermont farm-to-table spots. Every recommendation comes from people who eat here regularly.",
+  },
+  {
+    icon: '🍺',
+    title: 'Local Breweries',
+    desc: "Dive into Vermont's thriving craft beer scene. Long Trail, Outer Limits, River Roost, and dozens of regional breweries offer a diverse range of artisanal brews crafted with passion and precision.",
+  },
+  {
+    icon: '🏛️',
+    title: 'Museums & Culture',
+    desc: "Immerse yourself in Killington's rich arts and culture scene. Visit museums and galleries showcasing the region's history and heritage — from the American Precision Museum to the Billings Farm.",
+  },
+  {
+    icon: '🧗',
+    title: 'Adventure',
+    desc: "For thrill-seekers, Killington delivers: ziplines, whitewater rafting, rock climbing, ATV tours, snowmobile excursions, and the most challenging ski terrain in the East.",
+  },
+  {
+    icon: '🥾',
+    title: 'Hiking & Outdoors',
+    desc: "The Green Mountains offer hundreds of miles of trails, from easy walks through covered bridges to summit hikes at Killington Peak with views stretching to New Hampshire.",
+  },
+  {
+    icon: '🏠',
+    title: 'Lodging',
+    desc: "From ski-in/ski-out slopeside condos to cozy B&Bs in Woodstock and the full Grand Hotel — we cover every lodging option in and around Killington for every budget and group size.",
+  },
+];
+---
+
+<BaseLayout
+  title="Our Story"
+  description="The mission, the mountain, and the locals behind Killington Getaway."
+>
+  <main class="min-h-screen bg-white font-body">
+    <Hero
+      title='<span class="text-white">Our</span> <span class="text-brand-green">Story</span>'
+      subtitle='The mission, the mountain, and the <span class="text-brand-green">locals behind Killington Getaway</span>.'
+      image="/images/hero/our-story-hero.webp"
+    />
+
+    <!-- Header -->
+    <section class="bg-white border-b border-gray-100 py-24 px-6 text-center">
+      <div class="max-w-4xl mx-auto">
+        <div class="inline-flex items-center gap-3 mb-6">
+          <span class="w-8 h-[2px] bg-brand-green"></span>
+          <p class="uppercase tracking-[0.3em] text-xs font-black text-brand-navy/40">Our Story</p>
+          <span class="w-8 h-[2px] bg-brand-green"></span>
+        </div>
+        <h1 class="text-5xl md:text-7xl font-heading font-black text-brand-navy mb-8 tracking-tight">
+          Discover the Splendors of <br /><span class="text-brand-green">Killington Getaway</span>
+        </h1>
+        <p class="text-gray-400 text-xl font-medium max-w-2xl mx-auto">
+          Your ultimate travel guide — built by locals, for everyone who wants to experience Vermont's greatest mountain region the right way.
+        </p>
+      </div>
+    </section>
+
+    <!-- Main description -->
+    <section class="py-24 px-6">
+      <div class="max-w-5xl mx-auto">
+        <div class="bg-gray-50 rounded-[3rem] p-12 lg:p-20 mb-24 relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-64 h-64 bg-brand-green/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
+          <div class="relative z-10">
+            <p class="text-brand-navy font-bold text-2xl lg:text-3xl leading-relaxed mb-10">
+              Our comprehensive guide is designed to help you make the most of your visit to Killington, Vermont. Whether you're planning a winter ski weekend, a summer mountain bike trip, or a fall foliage drive through the Green Mountains, we've curated everything you need in one place.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+              <p class="text-gray-500 text-lg font-medium leading-relaxed">
+                Explore our handpicked selection of Killington's finest restaurants, cafés, and bars — satisfying your culinary cravings with mouthwatering Vermont-grown delights. For beer enthusiasts, dive into the thriving craft beer scene at local breweries, where you can savor a diverse range of artisanal brews crafted with passion and precision.
+              </p>
+              <p class="text-gray-500 text-lg font-medium leading-relaxed">
+                Immerse yourself in Killington's rich arts and culture scene by visiting museums and galleries that showcase the region's history and heritage. And for adventure seekers, Killington offers thrilling experiences at adventure centers — where you can zipline through treetops, navigate rapids on whitewater rafting trips, or challenge yourself with rock climbing.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-5xl font-heading font-black text-brand-navy tracking-tight uppercase">What Our Guide <span class="text-brand-green">Covers</span></h2>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {GUIDE_SECTIONS.map((s) => (
+            <div class="bg-white border border-gray-100 rounded-[2.5rem] p-10 hover:shadow-premium transition-all duration-300 transform hover:-translate-y-2 group">
+              <div class="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center text-4xl mb-6 group-hover:bg-brand-green/10 transition-colors">
+                {s.icon}
+              </div>
+              <h3 class="font-heading font-black text-brand-navy text-xl mb-4 group-hover:text-brand-green transition-colors">{s.title}</h3>
+              <p class="text-gray-400 font-medium leading-relaxed">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission -->
+    <section class="bg-brand-navy py-24 px-6 relative overflow-hidden">
+      <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-brand-green to-transparent opacity-20"></div>
+      <div class="max-w-4xl mx-auto text-center relative z-10">
+        <div class="inline-flex items-center gap-3 mb-8">
+          <span class="w-8 h-[2px] bg-brand-green"></span>
+          <h2 class="text-xl font-heading font-black text-white uppercase tracking-[0.2em]">Our Mission</h2>
+          <span class="w-8 h-[2px] bg-brand-green"></span>
+        </div>
+        <p class="text-white font-bold text-2xl md:text-3xl leading-relaxed mb-10">
+          At Killington Getaway, we strive to be your trusted companion on your journey. Our meticulously curated travel guide and directory provide up-to-date information and recommendations, ensuring a memorable and hassle-free experience.
+        </p>
+        <p class="text-white/40 text-xl font-medium leading-relaxed">
+          Whether you're a first-time visitor or a frequent traveler, let us unlock the wonders of Killington so you can create cherished memories in this scenic paradise.
+        </p>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-24 px-6 text-center">
+      <div class="max-w-4xl mx-auto bg-gray-50 rounded-[4rem] py-16 px-10 border border-gray-100">
+        <h2 class="text-4xl md:text-5xl font-heading font-black text-brand-navy mb-4 tracking-tight uppercase">Have <span class="text-brand-green">Questions?</span></h2>
+        <p class="text-gray-400 text-xl font-medium mb-12 max-w-2xl mx-auto">Our team is made up of year-round Vermonters who ski Killington every week. We're here to help you plan the perfect trip.</p>
+        <div class="flex gap-6 justify-center flex-wrap">
+          <a
+            href="/contact-us"
+            class="bg-brand-green text-white font-black px-12 py-5 rounded-full hover:bg-brand-green/90 transition-all shadow-xl uppercase tracking-widest text-sm"
+          >
+            Contact Us
+          </a>
+          <a
+            href="/our-team"
+            class="bg-brand-navy text-white font-black px-12 py-5 rounded-full hover:bg-brand-navy/90 transition-all shadow-xl uppercase tracking-widest text-sm"
+          >
+            Meet the Team
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

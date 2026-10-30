@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import LocalContractors from '../components/react/LocalContractors';
+---
+
+<BaseLayout
+  title="Local Contractors"
+  description="Browse dozens of skilled professionals near Killington — from plumbers and electricians to property managers and arborists."
+>
+  <main class="min-h-screen bg-white font-body">
+
+    <Hero
+      title='<span class="text-white">Local</span> <span class="text-brand-green">Contractors</span>'
+      subtitle="Browse dozens of skilled professionals near Killington — from plumbers and electricians to property managers and arborists."
+    />
+
+    <LocalContractors client:load />
+
+    <!-- CTA Section -->
+    <section class="py-24 px-6 text-center bg-gray-50/50 border-t border-gray-100 relative overflow-hidden">
+      <div class="max-w-4xl mx-auto bg-brand-navy rounded-[4rem] py-20 px-10 border border-brand-navy shadow-2xl relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-80 h-80 bg-brand-green/10 rounded-full -mr-40 -mt-40"></div>
+        <h2 class="text-4xl md:text-5xl font-heading font-black text-white mb-6 tracking-tight uppercase relative z-10">Are You a Local <span class="text-brand-green">Contractor?</span></h2>
+        <p class="text-white/60 text-xl font-medium mb-12 max-w-2xl mx-auto leading-relaxed relative z-10">
+          Get your business in front of thousands of Vermont homeowners and property managers who rely on Killington Getaway.
+        </p>
+        <div class="flex gap-6 justify-center flex-wrap relative z-10">
+          <a
+            href="/add-listings"
+            class="bg-brand-green text-white font-black px-12 py-5 rounded-full hover:bg-brand-green/90 transition-all shadow-xl uppercase tracking-widest text-sm"
+          >
+            Add Your Listing
+          </a>
+          <a
+            href="/contact-us"
+            class="bg-transparent text-white border-2 border-white/20 font-black px-12 py-5 rounded-full hover:bg-white/5 transition-all uppercase tracking-widest text-sm"
+          >
+            Get in Touch
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</BaseLayout>

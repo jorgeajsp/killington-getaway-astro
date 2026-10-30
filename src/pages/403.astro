@@ -1,0 +1,121 @@
+---
+// 403 Forbidden page - standalone without BaseLayout for minimal footprint
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>403 - Access Denied | Killington Getaway</title>
+  <meta name="description" content="You don't have permission to access this page." />
+  <link rel="icon" type="image/png" href="/icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --brand-navy: #0B1619;
+      --brand-green: #2d94e3;
+      --brand-blue: #00B4D8;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--brand-navy);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .bg-decor {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      filter: blur(80px);
+      animation: pulse 4s ease-in-out infinite;
+    }
+    .bg-decor-1 { top: 0; right: 0; margin-right: -16rem; margin-top: -16rem; background: rgba(45, 148, 227, 0.1); }
+    .bg-decor-2 { bottom: 0; left: 0; margin-left: -16rem; margin-bottom: -16rem; background: rgba(0, 180, 216, 0.1); animation-delay: 1s; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+    .content { max-width: 42rem; position: relative; z-index: 10; }
+    .icon-box {
+      width: 8rem;
+      height: 8rem;
+      background: rgba(255,255,255,0.05);
+      border-radius: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      margin: 0 auto 2.5rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+      animation: bounce 2s ease-in-out infinite;
+    }
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 15vw, 9rem);
+      color: white;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      color: var(--brand-green);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    h2 span { color: white; }
+    p {
+      color: rgba(255,255,255,0.4);
+      font-size: 1.25rem;
+      font-weight: 500;
+      line-height: 1.7;
+      max-width: 32rem;
+      margin: 0 auto 3rem;
+    }
+    .buttons { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      font-weight: 900;
+      padding: 1.25rem 3rem;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.75rem;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .btn-primary { background: var(--brand-green); color: white; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+    .btn-primary:hover { background: rgba(45, 148, 227, 0.9); }
+    .btn-secondary { background: transparent; color: white; border: 2px solid rgba(255,255,255,0.2); }
+    .btn-secondary:hover { background: rgba(255,255,255,0.05); }
+  </style>
+</head>
+<body>
+  <div class="bg-decor bg-decor-1"></div>
+  <div class="bg-decor bg-decor-2"></div>
+
+  <div class="content">
+    <div class="icon-box">🚫</div>
+    <h1>403</h1>
+    <h2>Trail <span>Closed</span></h2>
+    <p>
+      This trail is closed. You don't have permission to access this area — kind of like dropping into a double-black when the ski patrol has roped it off.
+    </p>
+    <div class="buttons">
+      <a href="/" class="btn btn-primary">Back to Base Camp</a>
+      <a href="/contact-us" class="btn btn-secondary">Contact Support</a>
+    </div>
+  </div>
+</body>
+</html>

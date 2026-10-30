@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+---
+
+<BaseLayout
+  title="Woodward Mountain Park"
+  description="Home of the legendary Dream Maker terrain park at Killington Resort."
+>
+  <main class="min-h-screen bg-white font-body">
+    <Hero
+      title='<span class="text-white">Woodward</span> <span class="text-brand-green">Mountain Park</span>'
+      subtitle="Home of the legendary Dream Maker terrain park at Killington Resort."
+      image="/images/hero/woodward-hero.png"
+    />
+
+    <section class="py-24 px-6">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-heading font-black text-brand-navy tracking-tight uppercase mb-6">
+            Dream Maker: Where Legends Are Built
+          </h2>
+          <p class="text-gray-500 text-xl leading-relaxed">
+            Killington's signature terrain park, Dream Maker, is more than just a park — it's a freestyle masterpiece. Featuring massive jumps, creative rail lines, and perfectly manicured transitions, it's where the East Coast's best riders come to push their limits.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="bg-gray-50 rounded-3xl p-10 border border-gray-100 hover:border-brand-green/30 transition-all">
+            <h3 class="text-2xl font-black text-brand-navy uppercase mb-4">Dream Maker Park</h3>
+            <p class="text-gray-600 leading-relaxed mb-6">
+              The crown jewel of Woodward Killington. Large-scale features designed for advanced riders looking for maximum airtime and technical rail challenges.
+            </p>
+            <div class="w-12 h-1 bg-brand-green rounded-full"></div>
+          </div>
+
+          <div class="bg-gray-50 rounded-3xl p-10 border border-gray-100 hover:border-brand-green/30 transition-all">
+            <h3 class="text-2xl font-black text-brand-navy uppercase mb-4">Peace Park</h3>
+            <p class="text-gray-600 leading-relaxed mb-6">
+              A collaborative terrain park designed with Danny Davis. This park focuses on flow, fun, and creative expression through unique transitions.
+            </p>
+            <div class="w-12 h-1 bg-brand-green rounded-full"></div>
+          </div>
+        </div>
+
+        <div class="mt-20 p-12 bg-brand-navy rounded-[3rem] text-center text-white relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-brand-green/20 to-transparent pointer-events-none"></div>
+          <h3 class="text-3xl font-heading font-black uppercase mb-6 relative z-10">Experience the Beast</h3>
+          <p class="text-gray-300 text-lg mb-10 max-w-2xl mx-auto relative z-10">
+            Woodward access is included with your Killington lift ticket or season pass. Come experience the most progressive parks in the East.
+          </p>
+          <a
+            href="https://www.killington.com/the-mountain/terrain-parks/terrain-parks-overview/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block bg-brand-green text-white font-black px-10 py-4 rounded-full uppercase tracking-widest hover:scale-105 transition-transform shadow-xl relative z-10"
+          >
+            Discover Killington's Terrain Parks
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

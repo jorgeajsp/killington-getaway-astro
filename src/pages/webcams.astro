@@ -1,0 +1,171 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const WEBCAMS = [
+  {
+    name: 'Killington Peak – K1 Summit',
+    description: 'Live view from the top of K1 Gondola at 4,241 ft. Best for checking summit conditions, visibility, and wind.',
+    type: 'image',
+    embedUrl: 'https://images.unsplash.com/photo-1548777123-e216912df7d8?w=1600&q=80',
+    credit: 'Killington.com',
+    creditUrl: 'https://www.killington.com/the-mountain/conditions-weather/webcam',
+    tag: 'Summit',
+  },
+  {
+    name: 'Snowshed Base Area',
+    description: "View of the Snowshed base lodge and beginner terrain. Great for checking lift lines and snow conditions at the valley.",
+    type: 'youtube',
+    embedUrl: 'https://www.youtube.com/embed/L1m1e5-VItw?autoplay=1&mute=1',
+    credit: 'Killington.com',
+    creditUrl: 'https://www.killington.com/the-mountain/conditions-weather/webcam',
+    tag: 'Base',
+  },
+  {
+    name: 'Bear Mountain View',
+    description: 'Covers the Bear Mountain terrain including Outer Limits and the mogul fields. Advanced terrain check.',
+    type: 'image',
+    embedUrl: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=80',
+    credit: 'Killington.com',
+    creditUrl: 'https://www.killington.com/the-mountain/conditions-weather/webcam',
+    tag: 'Advanced',
+  },
+];
+
+const TAG_COLORS: Record<string, string> = {
+  'Summit': '#2d94e3',
+  'Base': '#3498DB',
+  'Road': '#D97706',
+  'Advanced': '#0B1619',
+};
+
+const RESOURCES = [
+  {
+    title: 'Official Killington Cams',
+    desc: "Killington Resort's own webcam network with views across all six peaks and base lodges.",
+    href: 'https://www.killington.com/mountain/snow-and-weather/webcams',
+    label: 'killington.com →',
+    color: '#2d94e3',
+  },
+  {
+    title: 'Ski Conditions',
+    desc: 'Full snow report, open trail count, and overnight snowfall totals updated every morning.',
+    href: '/ski-conditions',
+    label: 'View Conditions →',
+    color: '#3498DB',
+  },
+  {
+    title: 'Mountain Weather',
+    desc: 'Hourly summit and valley forecast with temperature, wind, and precipitation probability.',
+    href: 'https://www.mountain-forecast.com/peaks/Killington-Peak/forecasts/1293',
+    label: 'View Forecast →',
+    color: '#0B1619',
+  },
+];
+---
+
+<BaseLayout
+  title="Webcams"
+  description="Live webcam views from Killington Resort - check summit, base, and trail conditions before you head up."
+>
+  <main class="min-h-screen bg-white font-body">
+    <!-- Header -->
+    <section class="bg-white border-b border-gray-100 py-24 px-6 text-center overflow-hidden">
+      <div class="max-w-4xl mx-auto">
+        <div class="inline-flex items-center gap-3 mb-6">
+          <span class="w-8 h-[2px] bg-brand-green"></span>
+          <p class="uppercase tracking-[0.3em] text-xs font-black text-brand-navy/40">Live Views</p>
+          <span class="w-8 h-[2px] bg-brand-green"></span>
+        </div>
+        <h1 class="text-5xl md:text-7xl font-heading font-black text-brand-navy mb-8 tracking-tight uppercase">Killington <span class="text-brand-green">Webcams</span></h1>
+        <p class="text-gray-400 text-xl font-medium max-w-2xl mx-auto">Check live mountain conditions before you head up. Real-time views from the summit, base, and trail corridors.</p>
+      </div>
+    </section>
+
+    <!-- Webcam grid -->
+    <section class="py-24 px-6 bg-gray-50/50">
+      <div class="max-w-6xl mx-auto flex flex-col gap-16">
+        {WEBCAMS.map((cam) => (
+          <div class="bg-white rounded-[3rem] overflow-hidden shadow-premium border border-gray-50 transition-all duration-500 hover:shadow-2xl">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between px-10 pt-10 pb-6">
+              <div class="flex items-center gap-4 mb-4 md:mb-0">
+                <span
+                  class="text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg"
+                  style={`background-color: ${TAG_COLORS[cam.tag] || '#2d94e3'}`}
+                >
+                  {cam.tag}
+                </span>
+                <h2 class="text-2xl font-heading font-black text-brand-navy uppercase tracking-tight">{cam.name}</h2>
+              </div>
+              <a
+                href={cam.creditUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="bg-brand-navy text-white text-[10px] font-black px-6 py-2 rounded-xl uppercase tracking-[0.2em] shadow-lg hover:bg-brand-navy/90 transition-all"
+              >
+                Powered by {cam.credit}
+              </a>
+            </div>
+            <div class="px-10 pb-8">
+              <p class="text-gray-400 font-medium leading-relaxed">{cam.description}</p>
+            </div>
+            <div class="w-full h-[500px] border-t border-gray-50 bg-gray-900 relative">
+              {cam.type === 'youtube' || cam.type === 'iframe' ? (
+                <iframe
+                  src={cam.embedUrl}
+                  title={cam.name}
+                  class="w-full h-full border-0"
+                  allowfullscreen
+                  allow="autoplay; encrypted-media"
+                ></iframe>
+              ) : (
+                <div class="w-full h-full relative group">
+                  <img
+                    src={cam.embedUrl}
+                    alt={cam.name}
+                    class="w-full h-full object-cover"
+                  />
+                  <div class="absolute top-4 left-4 flex items-center gap-2 bg-black/60 px-3 py-1 rounded-full backdrop-blur-sm">
+                    <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+                    <span class="text-white text-xs font-bold tracking-widest uppercase">Live</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Additional resources -->
+    <section class="py-24 px-6 bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-5xl font-heading font-black text-brand-navy mb-4 tracking-tight uppercase">More Live <span class="text-brand-green">Resources</span></h2>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          {RESOURCES.map((r) => (
+            <a
+              href={r.href}
+              target={r.href.startsWith('http') ? '_blank' : undefined}
+              rel={r.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              class="bg-white border border-gray-100 rounded-[2.5rem] p-10 hover:shadow-premium transition-all duration-300 group flex flex-col transform hover:-translate-y-2"
+            >
+              <h3 class="font-heading font-black text-brand-navy text-xl mb-4 group-hover:text-brand-green transition-colors">{r.title}</h3>
+              <p class="text-gray-400 font-medium leading-relaxed flex-1 mb-8">{r.desc}</p>
+              <span class="text-[10px] font-black uppercase tracking-widest transition-all group-hover:gap-3 flex items-center" style={`color: ${r.color}`}>
+                {r.label}
+              </span>
+            </a>
+          ))}
+        </div>
+        <p class="text-center text-[10px] font-black text-gray-300 mt-16 uppercase tracking-widest">
+          Webcam feeds provided by
+          <a href="https://www.killington.com" target="_blank" rel="noopener noreferrer" class="hover:text-brand-green transition-colors ml-1">
+            Killington Resort
+          </a>
+          . All imagery property of their respective providers.
+        </p>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

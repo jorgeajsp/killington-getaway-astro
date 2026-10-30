@@ -1,0 +1,108 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+
+const BUS_ROUTES = [
+  {
+    name: "City Fixed",
+    desc: "All Rutland City fixed routes",
+    cta: "View All City Fixed Routes",
+    link: "https://thebus.com/routes/city-fixed-north-route/",
+    image: "/images/routes/city-fixed.png"
+  },
+  {
+    name: "Proctor Route",
+    desc: "MVRTC is the central transfer point",
+    cta: "View Proctor Route",
+    link: "https://thebus.com/routes/proctor-route/",
+    image: "/images/routes/proctor.png"
+  },
+  {
+    name: "Middlebury Route",
+    desc: "Middlebury – Rutland connector",
+    cta: "View Middlebury Route",
+    link: "https://thebus.com/routes/middlebury-route/",
+    image: "/images/routes/middlebury.png"
+  },
+  {
+    name: "Fair Haven",
+    desc: "Rutland Fair Haven/Poultney",
+    cta: "View Fair Haven Route",
+    link: "https://thebus.com/routes/fair-haven-route/",
+    image: "/images/routes/fair-haven.png"
+  },
+  {
+    name: "Rutland Killington Commuter",
+    desc: "Rutland, Mendon and Killington",
+    cta: "View Rutland Killington Route",
+    link: "https://thebus.com/routes/rutland-killington-commuter/",
+    image: "/images/routes/rutland-killington-commuter.png"
+  },
+  {
+    name: "Manchester",
+    desc: "Rutland to Manchester",
+    cta: "View Manchester Route",
+    link: "https://thebus.com/routes/manchester-route/",
+    image: "/images/routes/manchester.png"
+  },
+  {
+    name: "Ludlow",
+    desc: "Rutland to Bellows Falls Commuter",
+    cta: "View Ludlow Route",
+    link: "https://thebus.com/routes/ludlow-route/",
+    image: "/images/routes/ludlow.png"
+  },
+  {
+    name: "Special",
+    desc: "Paratransit Services / Medicaid / O&D Program",
+    cta: "View Paratransit Information",
+    link: "https://thebus.com/routes/paratransit/",
+    image: "/images/routes/special.png"
+  }
+];
+---
+
+<BaseLayout
+  title="Bus Routes"
+  description="Find the bus route that best suits your needs — Green Mountain Transit routes to Killington and around Vermont."
+>
+  <main class="min-h-screen bg-white font-body">
+    <Hero
+      title='<span class="text-white">Bus</span> <span class="text-brand-green">Routes</span>'
+      subtitle="Find the route that best suits your needs."
+      image="/images/hero/the-bus-routes.webp"
+    />
+
+    <section class="py-24 px-6 bg-gray-50/50">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          {BUS_ROUTES.map((route) => (
+            <div class="bg-white rounded-[2rem] overflow-hidden shadow-premium border border-gray-100 flex flex-col hover:shadow-2xl transition-all duration-300">
+              <div class="h-48 overflow-hidden">
+                <img
+                  src={route.image}
+                  alt={route.name}
+                  class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                />
+              </div>
+              <div class="p-8 flex flex-col flex-1 justify-between">
+                <div>
+                  <h3 class="text-xl font-black text-brand-navy uppercase tracking-tight mb-3">{route.name}</h3>
+                  <p class="text-gray-500 text-sm mb-6 leading-relaxed">{route.desc}</p>
+                </div>
+                <a
+                  href={route.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-2 text-brand-blue font-black uppercase tracking-widest text-[10px] hover:gap-3 transition-all"
+                >
+                  {route.cta} <span>→</span>
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

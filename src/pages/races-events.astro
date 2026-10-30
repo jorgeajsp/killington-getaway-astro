@@ -1,0 +1,235 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const EVENTS = [
+  {
+    name: 'Stifel Killington Cup',
+    subtitle: "FIS Women's Alpine World Cup",
+    dates: 'November 28–30, 2025',
+    category: 'World Cup Racing',
+    categoryColor: '#DC2626',
+    img: 'https://images.unsplash.com/photo-1551524559-8af4e6624178?w=600&q=80',
+    desc: "The crown jewel of Killington's racing calendar. The Stifel Killington Cup is one of the top three events on the FIS Women's World Cup circuit, drawing the world's best alpine ski racers to the Superstar trail every Thanksgiving weekend. Giant slalom and slalom disciplines over three days of racing.",
+    highlights: [
+      'Tens of thousands of spectators line the Superstar course',
+      'Giant Slalom Saturday, Slalom Sunday',
+      'Live music and après scene all weekend',
+      'Free spectator access to the course-side fan zones',
+      'VIP hospitality packages available through Killington Resort',
+    ],
+    link: 'https://www.killington.com/events/detail/stifel-killington-cup',
+    featured: true,
+  },
+  {
+    name: 'Bear Mountain Mogul Challenge',
+    subtitle: 'Annual Spring Classic',
+    dates: 'April 2026 (TBD)',
+    category: 'Mogul Competition',
+    categoryColor: '#D97706',
+    img: 'https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?w=600&q=80',
+    desc: "An annual pilgrimage for bump skiers from across the Northeast. The Bear Mountain Mogul Challenge tests technique, air, and speed on one of the East's premier mogul fields. Open to all skill levels with multiple competitive categories.",
+    highlights: [
+      'Open and amateur divisions available',
+      "Held on Bear Mountain's classic mogul terrain",
+      'Awards ceremony and après party following the event',
+      'Spectator friendly — best viewed from the Bear Mountain lift',
+    ],
+    link: 'https://www.killington.com/events',
+    featured: false,
+  },
+  {
+    name: 'Killington Opening Weekend',
+    subtitle: 'Season Kickoff',
+    dates: 'Early November 2025',
+    category: 'Season Opener',
+    categoryColor: '#00B4D8',
+    img: 'https://images.unsplash.com/photo-1605719124347-9d5b4f0a7edb?w=600&q=80',
+    desc: "Killington traditionally opens before every other resort in the East — sometimes as early as late October. The opening weekend draws die-hard skiers and snowboarders who can't wait another day. Limited terrain, maximum energy.",
+    highlights: [
+      'First lifts in the East, every year',
+      'Snowshed and Ramshead base areas typically open first',
+      'Opening weekend parties at Wobbly Barn and Pickle Barrel',
+      'Discounted early-season passes available at killington.com',
+    ],
+    link: 'https://www.killington.com/events',
+    featured: false,
+  },
+  {
+    name: 'Pond Skimming',
+    subtitle: 'Spring Closing Tradition',
+    dates: 'April 2026 (Last Weekend)',
+    category: 'Spring Classic',
+    categoryColor: '#2d94e3',
+    img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',
+    desc: "A Killington tradition since the 1970s. Contestants ski or ride down a steep run, hit a kicker, and attempt to skim across a pool of icy water at the bottom — in costume. No skill required. Maximum chaos encouraged.",
+    highlights: [
+      'Open to all riders — registration at the event',
+      'Costume competition alongside the skim contest',
+      'Live DJ and crowd on the snow at the base of Snowshed',
+      'All proceeds support mountain conservation efforts',
+    ],
+    link: 'https://www.killington.com/events',
+    featured: false,
+  },
+  {
+    name: 'Green Mountain Derby',
+    subtitle: 'Eastern NASTAR Championship',
+    dates: 'March 2026',
+    category: 'Recreational Racing',
+    categoryColor: '#7C3AED',
+    img: 'https://images.unsplash.com/photo-1517299321609-52687d1bc55a?w=600&q=80',
+    desc: "NASTAR recreational racing at Killington draws competitors from all six New England states. Age-handicapped format means grandparents race grandkids on equal footing. One of the most inclusive events on the Killington calendar.",
+    highlights: [
+      'Open to all NASTAR registered racers',
+      'Age and ability handicapping for fair competition',
+      'Medals for top finishers in each age category',
+      'Connects to the national NASTAR championship qualification',
+    ],
+    link: 'https://www.nastar.com',
+    featured: false,
+  },
+  {
+    name: 'Killington Stage Race',
+    subtitle: 'UCI Sanctioned Cycling',
+    dates: 'June 2026',
+    category: 'Summer Event',
+    categoryColor: '#EA580C',
+    img: 'https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?w=600&q=80',
+    desc: "When the snow melts, the cyclists arrive. The Killington Stage Race is a UCI-sanctioned multi-day road cycling event that uses the same mountain roads and elevation that makes Killington famous in winter. A favorite on the New England cycling calendar.",
+    highlights: [
+      'UCI sanctioned — attracts professional cycling teams',
+      'Multiple stages including a summit finish at K1',
+      'Gran Fondo recreational ride available to all participants',
+      'Spectating is free along the entire course',
+    ],
+    link: 'https://www.killingtonstagerace.com',
+    featured: false,
+  },
+];
+
+const featured = EVENTS[0];
+const rest = EVENTS.slice(1);
+---
+
+<BaseLayout
+  title="Races & Events"
+  description="From World Cup slalom to pond skimming — the full calendar of events that make Killington more than just a ski resort."
+>
+  <main class="min-h-screen bg-white font-body">
+    <!-- Header -->
+    <section class="bg-white border-b border-gray-100 py-24 px-6 text-center overflow-hidden">
+      <div class="max-w-4xl mx-auto">
+        <div class="inline-flex items-center gap-3 mb-6">
+          <span class="w-8 h-[2px] bg-brand-green"></span>
+          <p class="uppercase tracking-[0.3em] text-xs font-black text-brand-navy/40">Killington Events</p>
+          <span class="w-8 h-[2px] bg-brand-green"></span>
+        </div>
+        <h1 class="text-5xl md:text-7xl font-heading font-black text-brand-navy mb-8 tracking-tight uppercase">Races & <span class="text-brand-green">Events</span></h1>
+        <p class="text-gray-400 text-xl font-medium max-w-2xl mx-auto">From World Cup slalom to pond skimming — the full calendar of events that make Killington more than just a ski resort.</p>
+      </div>
+    </section>
+
+    <!-- Featured Event -->
+    <section class="py-24 px-6 bg-gray-50/50">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex items-center gap-3 mb-10">
+          <span class="text-brand-green font-black text-[10px] uppercase tracking-widest">Featured Event</span>
+          <div class="flex-1 h-[1px] bg-gray-200"></div>
+        </div>
+
+        <a
+          href={featured.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group flex flex-col lg:flex-row bg-white rounded-[3rem] overflow-hidden shadow-premium hover:shadow-2xl transition-all duration-500 border border-gray-50"
+        >
+          <div class="lg:w-1/2 h-[400px] lg:h-auto overflow-hidden">
+            <img src={featured.img} alt={featured.name} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+          </div>
+          <div class="lg:w-1/2 p-10 lg:p-16 flex flex-col justify-center">
+            <div class="flex items-center gap-4 mb-6">
+              <span class="text-[10px] font-black px-4 py-1.5 rounded-full text-white uppercase tracking-widest shadow-lg" style={`background-color: ${featured.categoryColor}`}>
+                {featured.category}
+              </span>
+              <span class="text-[10px] font-black text-gray-300 uppercase tracking-widest">{featured.dates}</span>
+            </div>
+            <h2 class="text-3xl md:text-5xl font-heading font-black text-brand-navy mb-2 group-hover:text-brand-green transition-colors leading-tight">
+              {featured.name}
+            </h2>
+            <p class="text-lg font-heading font-black text-gray-300 mb-6 uppercase tracking-tight">{featured.subtitle}</p>
+            <p class="text-gray-400 font-medium leading-relaxed mb-8">{featured.desc}</p>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 mb-10">
+              {featured.highlights.map((h) => (
+                <li class="text-xs font-medium text-gray-400 flex items-start gap-3">
+                  <span class="w-5 h-5 rounded-full bg-brand-green/10 flex items-center justify-center text-brand-green text-[10px] flex-shrink-0">✓</span>
+                  {h}
+                </li>
+              ))}
+            </ul>
+            <div class="flex items-center gap-3 text-brand-green font-black text-xs uppercase tracking-widest group-hover:gap-4 transition-all">
+              Event Details
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- All Events -->
+    <section class="py-24 px-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex items-center justify-between mb-16">
+          <h2 class="text-2xl md:text-4xl font-heading font-black text-brand-navy uppercase tracking-tight">Full <span class="text-brand-green">Calendar</span></h2>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          {rest.map((ev) => (
+            <a
+              href={ev.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="bg-white rounded-[2.5rem] overflow-hidden shadow-premium hover:shadow-2xl transition-all duration-500 group flex flex-col transform hover:-translate-y-2 border border-gray-50"
+            >
+              <div class="relative h-60 overflow-hidden">
+                <img src={ev.img} alt={ev.name} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                <div class="absolute top-6 left-6">
+                  <span class="text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg" style={`background-color: ${ev.categoryColor}`}>
+                    {ev.category}
+                  </span>
+                </div>
+              </div>
+              <div class="p-8 lg:p-10 flex flex-col flex-1">
+                <p class="text-[10px] font-black text-gray-300 uppercase tracking-widest mb-2">{ev.dates}</p>
+                <h3 class="text-xl font-heading font-black text-brand-navy mb-1 group-hover:text-brand-green transition-colors leading-tight">{ev.name}</h3>
+                <p class="text-xs font-black text-gray-300 uppercase tracking-widest mb-4">{ev.subtitle}</p>
+                <p class="text-gray-400 font-medium leading-relaxed flex-1 mb-8 line-clamp-3">{ev.desc}</p>
+                <div class="flex items-center gap-2 text-brand-green font-black text-xs uppercase tracking-widest group-hover:gap-3 transition-all">
+                  Learn More
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Official calendar CTA -->
+    <section class="py-24 px-6 text-center">
+      <div class="max-w-4xl mx-auto bg-gray-50 rounded-[4rem] py-16 px-10 border border-gray-100">
+        <h2 class="text-4xl md:text-5xl font-heading font-black text-brand-navy mb-4 tracking-tight uppercase">Full Events <span class="text-brand-green">Calendar</span></h2>
+        <p class="text-gray-400 text-xl font-medium mb-12 max-w-2xl mx-auto leading-relaxed">
+          Killington Resort maintains a full calendar of events updated throughout the season — concerts, races, festivals, and celebrations.
+        </p>
+        <a
+          href="https://www.killington.com/events"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="bg-brand-navy text-white font-black px-12 py-5 rounded-full hover:bg-brand-navy/90 transition-all shadow-xl uppercase tracking-widest text-sm"
+        >
+          View Official Calendar →
+        </a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
