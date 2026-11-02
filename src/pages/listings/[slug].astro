@@ -73,6 +73,13 @@ const localBusinessSchema = {
       "addressCountry": "US"
     }
   }),
+  ...(listing.lat && listing.lng && {
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": listing.lat,
+      "longitude": listing.lng
+    }
+  }),
   ...(listing.phone && { "telephone": listing.phone }),
   ...(listing.website && { "sameAs": [listing.website] }),
   ...(listing.hours && { "openingHours": listing.hours }),
