@@ -93,6 +93,44 @@ const categoryColors: Record<string, string> = {
   'Research': '#34495e'
 };
 
+// Seasonal hero images (5 images per season)
+// NOTE: Winter needs 3 more images - add them as winter-3.webp, winter-4.webp, winter-5.webp
+const SEASONAL_IMAGES = {
+  winter: [
+    { src: '/images/hero/hero-winter-2026.webp', alt: 'Killington World Cup Racing' },
+    { src: '/images/hero/winter-activities-hero.webp', alt: 'Killington Winter Activities' },
+    // Add 3 more winter images here when provided
+  ],
+  summer: [
+    { src: '/images/hero/summer-hero.webp', alt: 'Killington Summer' },
+    { src: '/images/hero/summer-killington-aerial.webp', alt: 'Killington Aerial View' },
+    { src: '/images/hero/summer-killington-bikers.webp', alt: 'Mountain Biking at Killington' },
+    { src: '/images/hero/summer-killington-k1.webp', alt: 'K1 Gondola Summer' },
+    { src: '/images/hero/summer-killington-mountains.webp', alt: 'Killington Mountain Views' },
+  ],
+  fall: [
+    { src: '/images/hero/autumn-1.webp', alt: 'Killington Autumn' },
+    { src: '/images/hero/killington-fall-2.webp', alt: 'Killington Fall Colors' },
+    { src: '/images/hero/killington-fall-3.webp', alt: 'Killington Mountain Fall' },
+    { src: '/images/hero/killington-fall-4.webp', alt: 'Killington Autumn Views' },
+    { src: '/images/hero/killington-fall-5.webp', alt: 'Killington Fall Season' },
+  ],
+};
+
+// Determine current season based on month
+function getCurrentSeason(): 'winter' | 'summer' | 'fall' {
+  const month = new Date().getMonth(); // 0-11
+  // Winter: Nov(10), Dec(11), Jan(0), Feb(1), Mar(2), Apr(3)
+  if (month >= 10 || month <= 3) return 'winter';
+  // Fall: Sep(8), Oct(9)
+  if (month >= 8 && month <= 9) return 'fall';
+  // Summer: May(4), Jun(5), Jul(6), Aug(7)
+  return 'summer';
+}
+
+const currentSeason = getCurrentSeason();
+const heroImages = SEASONAL_IMAGES[currentSeason];
+
 // Airbnb accommodations
 const AIRBNB_LISTINGS = [
   { id: "17731360", title: "Killington Retreat | Deck-Fire Pit-Mountain Views!", rating: "4.94", guests: "4 guests", details: "2 bedrooms · 2 beds · 1 bath", location: "Clarendon, VT", img: "/images/accommodations/listing-1.webp", params: "guests=1&adults=1&s=66&source=embed_widget" },
@@ -133,11 +171,13 @@ const DEALS = [
     <!-- Hero Section with Rotating Images -->
     <section class="relative flex flex-col items-center justify-center overflow-hidden min-h-[800px] pb-16">
       <div class="hero-slideshow absolute inset-0">
-        <img src="/images/hero/hero-winter-2026.webp" alt="Killington World Cup Racing" class="hero-image active absolute inset-0 w-full h-full object-cover" />
-        <img src="/images/hero/killington-fall-2.webp" alt="Killington Fall Colors" class="hero-image absolute inset-0 w-full h-full object-cover" />
-        <img src="/images/hero/killington-fall-3.webp" alt="Killington Mountain Fall" class="hero-image absolute inset-0 w-full h-full object-cover" />
-        <img src="/images/hero/killington-fall-4.webp" alt="Killington Autumn Views" class="hero-image absolute inset-0 w-full h-full object-cover" />
-        <img src="/images/hero/killington-fall-5.webp" alt="Killington Fall Season" class="hero-image absolute inset-0 w-full h-full object-cover" />
+        {heroImages.map((img, i) => (
+          <img
+            src={img.src}
+            alt={img.alt}
+            class={`hero-image absolute inset-0 w-full h-full object-cover ${i === 0 ? 'active' : ''}`}
+          />
+        ))}
       </div>
       <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/70 z-0"></div>
 
