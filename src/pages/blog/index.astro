@@ -1,12 +1,21 @@
 ---
+export const prerender = false;
+
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/Hero.astro';
 
 // Get all blog posts, sorted by date (newest first)
+// Filter out drafts and posts scheduled for the future
+const now = new Date();
 const allPosts = await getCollection('blog');
 const posts = allPosts
-  .filter(post => !post.data.draft)
+  .filter(post => {
+    if (post.data.draft) return false;
+    // Check publishDate if set, otherwise use date
+    const publishDate = post.data.publishDate ? new Date(post.data.publishDate) : new Date(post.data.date);
+    return publishDate <= now;
+  })
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 
 const featured = posts[0];

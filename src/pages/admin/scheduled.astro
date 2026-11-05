@@ -1,0 +1,414 @@
+---
+export const prerender = false;
+
+import AdminLayout from '../../components/admin/AdminLayout.astro';
+import { verifyJWT, getUserById, parseCookies } from '../../lib/auth';
+import { getCollection } from 'astro:content';
+
+// Check authentication
+const cookieHeader = Astro.request.headers.get('cookie') || '';
+const cookies = parseCookies(cookieHeader);
+const accessToken = cookies['access_token'];
+
+if (!accessToken) {
+  return Astro.redirect('/admin/login');
+}
+
+const db = (Astro.locals as any).runtime?.env?.DB;
+const jwtSecret = (Astro.locals as any).runtime?.env?.JWT_SECRET;
+
+if (!db || !jwtSecret) {
+  return Astro.redirect('/admin/login');
+}
+
+const payload = await verifyJWT(accessToken, jwtSecret);
+if (!payload) {
+  return Astro.redirect('/admin/login');
+}
+
+const user = await getUserById(db, payload.sub);
+if (!user) {
+  return Astro.redirect('/admin/login');
+}
+
+// Get all blog posts
+const now = new Date();
+const allPosts = await getCollection('blog');
+
+// Categorize posts
+const posts = allPosts.map(post => {
+  const publishDate = post.data.publishDate ? new Date(post.data.publishDate) : null;
+  const postDate = new Date(post.data.date);
+
+  let status = 'published';
+  if (post.data.draft) {
+    status = 'draft';
+  } else if (publishDate && publishDate > now) {
+    status = 'scheduled';
+  }
+
+  return {
+    slug: post.slug,
+    title: post.data.title,
+    category: post.data.category,
+    date: post.data.date,
+    publishDate: post.data.publishDate || null,
+    status,
+    effectivePublishDate: publishDate || postDate
+  };
+}).sort((a, b) => b.effectivePublishDate.getTime() - a.effectivePublishDate.getTime());
+
+const scheduled = posts.filter(p => p.status === 'scheduled');
+const published = posts.filter(p => p.status === 'published');
+const drafts = posts.filter(p => p.status === 'draft');
+
+function formatDate(dateStr: string) {
+  return new Date(dateStr).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  });
+}
+
+function daysUntil(dateStr: string) {
+  const date = new Date(dateStr);
+  const diffTime = date.getTime() - now.getTime();
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays;
+}
+---
+
+<AdminLayout title="Scheduled Posts" user={user}>
+  <div class="page-header">
+    <h1 class="page-title">Scheduled Posts</h1>
+    <p class="page-subtitle">Manage blog post publishing schedule</p>
+  </div>
+
+  <!-- Scheduled Posts -->
+  <div class="section">
+    <div class="section-header">
+      <h2>
+        <span class="status-dot scheduled"></span>
+        Scheduled ({scheduled.length})
+      </h2>
+    </div>
+
+    {scheduled.length > 0 ? (
+      <div class="posts-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Publish Date</th>
+              <th>Time Until</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {scheduled.map(post => (
+              <tr>
+                <td class="title-cell">
+                  <a href={`/blog/${post.slug}/`} target="_blank">{post.title}</a>
+                </td>
+                <td><span class="category-badge">{post.category}</span></td>
+                <td>{formatDate(post.publishDate)}</td>
+                <td>
+                  <span class="days-badge">
+                    {daysUntil(post.publishDate)} days
+                  </span>
+                </td>
+                <td>
+                  <span class="edit-hint">Edit in: <code>src/content/blog/{post.slug}.md</code></span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    ) : (
+      <div class="empty-state">
+        <p>No scheduled posts</p>
+      </div>
+    )}
+  </div>
+
+  <!-- Published Posts -->
+  <div class="section">
+    <div class="section-header">
+      <h2>
+        <span class="status-dot published"></span>
+        Published ({published.length})
+      </h2>
+    </div>
+
+    <div class="posts-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Published</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {published.slice(0, 10).map(post => (
+            <tr>
+              <td class="title-cell">
+                <a href={`/blog/${post.slug}/`} target="_blank">{post.title}</a>
+              </td>
+              <td><span class="category-badge">{post.category}</span></td>
+              <td>{formatDate(post.date)}</td>
+              <td>
+                <a href={`/blog/${post.slug}/`} target="_blank" class="view-btn">View</a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {published.length > 10 && (
+        <p class="more-posts">...and {published.length - 10} more published posts</p>
+      )}
+    </div>
+  </div>
+
+  <!-- Drafts -->
+  {drafts.length > 0 && (
+    <div class="section">
+      <div class="section-header">
+        <h2>
+          <span class="status-dot draft"></span>
+          Drafts ({drafts.length})
+        </h2>
+      </div>
+
+      <div class="posts-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {drafts.map(post => (
+              <tr>
+                <td class="title-cell">{post.title}</td>
+                <td><span class="category-badge">{post.category}</span></td>
+                <td>
+                  <span class="edit-hint">Edit in: <code>src/content/blog/{post.slug}.md</code></span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )}
+
+  <!-- How to Schedule -->
+  <div class="info-card">
+    <h3>How to Schedule a Post</h3>
+    <p>Add a <code>publishDate</code> field to your blog post frontmatter:</p>
+    <pre><code>---
+title: "Your Post Title"
+date: "November 4, 2026"
+publishDate: "November 10, 2026"  # Post goes live on this date
+draft: false
+---</code></pre>
+    <p class="note">Posts with a future <code>publishDate</code> won't appear on the blog until that date. The system checks the date at runtime, so no redeployment is needed.</p>
+  </div>
+</AdminLayout>
+
+<style>
+  .page-header {
+    margin-bottom: 32px;
+  }
+
+  .page-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .page-subtitle {
+    color: #64748b;
+    margin-top: 4px;
+  }
+
+  .section {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+
+  .section-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .section-header h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .status-dot.scheduled { background: #f59e0b; }
+  .status-dot.published { background: #10b981; }
+  .status-dot.draft { background: #94a3b8; }
+
+  .posts-table {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    padding: 12px 24px;
+    text-align: left;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  th {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    background: #f8fafc;
+  }
+
+  td {
+    font-size: 14px;
+    color: #374151;
+  }
+
+  .title-cell a {
+    color: #0f172a;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .title-cell a:hover {
+    color: #3b82f6;
+  }
+
+  .category-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #f1f5f9;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #475569;
+  }
+
+  .days-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #fef3c7;
+    color: #b45309;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .view-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #f1f5f9;
+    color: #374151;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+
+  .view-btn:hover {
+    background: #e2e8f0;
+  }
+
+  .edit-hint {
+    font-size: 12px;
+    color: #94a3b8;
+  }
+
+  .edit-hint code {
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+  }
+
+  .more-posts {
+    padding: 16px 24px;
+    font-size: 13px;
+    color: #64748b;
+    text-align: center;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .empty-state {
+    padding: 40px 24px;
+    text-align: center;
+    color: #94a3b8;
+  }
+
+  .info-card {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 32px;
+  }
+
+  .info-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e40af;
+    margin-bottom: 12px;
+  }
+
+  .info-card p {
+    font-size: 14px;
+    color: #1e3a5f;
+    margin-bottom: 12px;
+  }
+
+  .info-card pre {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 13px;
+    margin: 12px 0;
+  }
+
+  .info-card code {
+    font-family: 'Monaco', 'Menlo', monospace;
+  }
+
+  .info-card .note {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 0;
+  }
+</style>

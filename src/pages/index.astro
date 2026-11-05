@@ -3,10 +3,15 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import WeatherWidget from '../components/react/WeatherWidget';
 
-// Get latest 4 blog posts
+// Get latest 4 blog posts (filter out drafts and future-scheduled posts)
+const now = new Date();
 const allPosts = await getCollection('blog');
 const latestPosts = allPosts
-  .filter(post => !post.data.draft)
+  .filter(post => {
+    if (post.data.draft) return false;
+    const publishDate = post.data.publishDate ? new Date(post.data.publishDate) : new Date(post.data.date);
+    return publishDate <= now;
+  })
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
   .slice(0, 4);
 
@@ -128,7 +133,7 @@ const DEALS = [
     <!-- Hero Section with Rotating Images -->
     <section class="relative flex flex-col items-center justify-center overflow-hidden min-h-[800px] pb-16">
       <div class="hero-slideshow absolute inset-0">
-        <img src="/images/hero/autumn-1.webp" alt="Killington Autumn Foliage" class="hero-image active absolute inset-0 w-full h-full object-cover" />
+        <img src="/images/hero/hero-winter-2026.webp" alt="Killington World Cup Racing" class="hero-image active absolute inset-0 w-full h-full object-cover" />
         <img src="/images/hero/killington-fall-2.webp" alt="Killington Fall Colors" class="hero-image absolute inset-0 w-full h-full object-cover" />
         <img src="/images/hero/killington-fall-3.webp" alt="Killington Mountain Fall" class="hero-image absolute inset-0 w-full h-full object-cover" />
         <img src="/images/hero/killington-fall-4.webp" alt="Killington Autumn Views" class="hero-image absolute inset-0 w-full h-full object-cover" />

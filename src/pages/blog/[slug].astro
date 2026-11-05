@@ -1,15 +1,31 @@
 ---
+export const prerender = false;
+
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-export async function getStaticPaths() {
-  const blogEntries = await getCollection('blog');
-  return blogEntries.map(entry => ({
-    params: { slug: entry.slug }, props: { entry },
-  }));
+// Get the slug from URL params
+const { slug } = Astro.params;
+
+// Find the blog post
+const blogEntries = await getCollection('blog');
+const entry = blogEntries.find(e => e.slug === slug);
+
+// 404 if not found
+if (!entry) {
+  return Astro.redirect('/404');
 }
 
-const { entry } = Astro.props;
+// Check if post is published (not draft and publishDate has passed)
+const now = new Date();
+const publishDate = entry.data.publishDate ? new Date(entry.data.publishDate) : new Date(entry.data.date);
+const isPublished = !entry.data.draft && publishDate <= now;
+
+// 404 if not yet published
+if (!isPublished) {
+  return Astro.redirect('/404');
+}
+
 const { Content } = await entry.render();
 
 const categoryColors: Record<string, string> = {
