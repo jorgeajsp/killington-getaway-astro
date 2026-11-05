@@ -86,7 +86,7 @@ The catch: You're driving to the mountain daily. That means dealing with parking
 
 ## Airbnb/Vacation Rentals: $100-300/Night, Most Flexibility
 
-![Cozy Airbnb rental living room](/images/blog/stay-at-killington/airbnb.webp)
+![Cozy Airbnb rental living room](/images/blog/stay-at-killington/airbnb.avif)
 
 | Detail | Info |
 |--------|------|
