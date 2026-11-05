@@ -15,7 +15,7 @@ Here's the real breakdown, with actual prices and trade-offs.
 
 ## Ski-In/Ski-Out: $300-500/Night, Ultimate Convenience
 
-![Ski-in/ski-out cabin with mountain views](/images/blog/stay-at-killington/cabin.webp)
+![Ski-in/ski-out cabin with mountain views](/images/blog/stay-at-killington/ski-in-ski-out.webp)
 
 | Detail | Info |
 |--------|------|
@@ -47,7 +47,7 @@ Most ski-in condos are a 5-10 minute drive (or shuttle ride) from the restaurant
 
 ## Down the Access Road: $150-300/Night, Best of Both Worlds
 
-![Access Road hotel with pool](/images/blog/stay-at-killington/hotel.webp)
+![Access Road hotel with pool](/images/blog/stay-at-killington/killington-resort-hotel.webp)
 
 | Detail | Info |
 |--------|------|
