@@ -16,10 +16,12 @@ function getCondition(code) {
 }
 
 function getSeason(month) {
-  if (month >= 2 && month <= 4)  return 'spring';
-  if (month >= 5 && month <= 7)  return 'summer';
-  if (month >= 8 && month <= 10) return 'fall';
-  return 'winter';
+  // Winter: Nov(10), Dec(11), Jan(0), Feb(1), Mar(2), Apr(3)
+  if (month >= 10 || month <= 3) return 'winter';
+  // Fall: Sep(8), Oct(9)
+  if (month >= 8 && month <= 9) return 'fall';
+  // Summer: May(4), Jun(5), Jul(6), Aug(7)
+  return 'summer';
 }
 
 function getCondBucket(code) {
