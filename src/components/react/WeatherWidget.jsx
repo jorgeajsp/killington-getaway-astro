@@ -59,12 +59,12 @@ const BG = {
     storm:  '/images/hero/killington-fall-2.webp',
   },
   winter: {
-    clear:  '/images/hero/hero-winter-2026.webp',
-    cloudy: '/images/hero/winter-3.webp',
-    fog:    '/images/hero/winter-4.webp',
-    rain:   '/images/hero/winter-5.jpg',
-    snow:   '/images/hero/winter-7.webp',
-    storm:  '/images/hero/winter-6.png',
+    clear:  '/images/hero/winter-3.webp',
+    cloudy: '/images/hero/winter-4.webp',
+    fog:    '/images/hero/winter-5.jpg',
+    rain:   '/images/hero/winter-7.webp',
+    snow:   '/images/hero/winter-9.jpg',
+    storm:  '/images/hero/winter-4.webp',
   },
 };
 
