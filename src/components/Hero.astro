@@ -6,10 +6,21 @@ interface Props {
   opacity?: number;
 }
 
+// Seasonal default images
+function getSeasonalDefault(): string {
+  const month = new Date().getMonth();
+  // Winter: Nov(10), Dec(11), Jan(0), Feb(1), Mar(2), Apr(3)
+  if (month >= 10 || month <= 3) return '/images/hero/hero-winter-2026.webp';
+  // Fall: Sep(8), Oct(9)
+  if (month >= 8 && month <= 9) return '/images/hero/autumn-1.webp';
+  // Summer: May(4), Jun(5), Jul(6), Aug(7)
+  return '/images/hero/summer-hero.webp';
+}
+
 const {
   title,
   subtitle,
-  image = "/images/hero/autumn-1.webp",
+  image = getSeasonalDefault(),
   opacity = 1
 } = Astro.props;
 
